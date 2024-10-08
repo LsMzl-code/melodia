@@ -1,0 +1,344 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tonality {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  // Une tonalité appartient à plusieurs gammes
+  scales Scale[]
+  // Une tonalité appartient à plusieurs accords
+  chords Chord[]
+}
+
+model Mode {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  // Un mode paut avoir plusieurs gammes
+  scales Scale[]
+  // Un mode peut avoir plusieurs accords
+  chords Chord[]
+}
+
+model Scale {
+  id Int @id @default(autoincrement())
+
+  // Une gamme a plusieurs notes
+  notes NotesOnScales[]
+
+  // Une gamme n'a qu'un intervalle
+  interval   ScaleInterval @relation(fields: [intervalId], references: [id])
+  intervalId Int
+
+  // Une gamme appartient n'a qu'une tonalité
+  tonality   Tonality @relation(fields: [tonalityId], references: [id])
+  tonalityId Int
+  // Une gamme n'a qu'un mode
+  mode       Mode     @relation(fields: [modeId], references: [id])
+  modeId     Int
+
+  // Une gamme ne peut être que dans une famille de gamme
+  scaleFamily   ScaleFamily @relation(fields: [scaleFamilyId], references: [id])
+  scaleFamilyId Int
+
+  degree String?
+
+  // Une gamme n'a qu'un seul nom
+  name      ScaleName @relation(fields: [nameScale], references: [name])
+  nameScale String
+
+  // Une gamme peut avoir plusieurs diagrammes
+  // diagrams ScaleDiagrams[]
+
+  //! Gammes favorites
+  // userFavourite FavouriteScales[]
+}
+
+model ScaleName {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  // Un nom peut être dans plusieurs gammes
+  scales Scale[]
+}
+
+model ChordName {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  // Un nom peut être dans plusieurs accords
+  chords Chord[]
+}
+
+// Famille de gamme (exotique, japonaise...)
+model ScaleFamily {
+  id     Int     @id @default(autoincrement())
+  name   String
+  // Une famille peut être dans plusieurs gammes
+  scales Scale[]
+}
+
+// Famille de gamme (exotique, japonaise...)
+model ChordFamily {
+  id     Int     @id @default(autoincrement())
+  name   String
+  // Une famille peut être dans plusieurs accords
+  chords Chord[]
+}
+
+model Note {
+  id        Int    @id @default(autoincrement())
+  name      String
+  reference String @unique
+  // Note grave ou aïgue
+  type      String
+
+  // Son unique de la note
+  soundUrl String
+
+  // Une note peut être dans plusieurs gammes
+  scales NotesOnScales[]
+  // Une note peut être dans plusieurs accords
+  chords NotesOnChords[]
+}
+
+model Degree {
+  id      Int    @id @default(autoincrement())
+  content String
+}
+
+model ScaleInterval {
+  id      Int     @id @default(autoincrement())
+  name    String
+  details String
+  // Un degré peut être dans plusieurs gammes
+  scales  Scale[]
+}
+
+model ChordInterval {
+  id      Int     @id @default(autoincrement())
+  name    String
+  details String
+  // Un degré peut être dans plusieurs gammes
+  chords  Chord[]
+}
+
+model Chord {
+  id        Int       @id @default(autoincrement())
+  // Un accord n'a qu'un seul nom
+  name      ChordName @relation(fields: [nameChord], references: [name])
+  nameChord String
+
+  // Un accord a plusieurs notes
+  notes NotesOnChords[]
+
+  // Une accord appartient n'a qu'une tonalité
+  tonality   Tonality @relation(fields: [tonalityId], references: [id])
+  tonalityId Int
+
+  // Un accord n'a qu'un mode
+  mode   Mode @relation(fields: [modeId], references: [id])
+  modeId Int
+
+  // Un accord n'a qu'une liste d'intervalles
+  chordInterval   ChordInterval @relation(fields: [chordIntervalId], references: [id])
+  chordIntervalId Int
+
+  // Une gamme ne peut être que dans une famille de gamme
+  chordFamily   ChordFamily @relation(fields: [chordFamilyId], references: [id])
+  chordFamilyId Int
+
+  // Un accord peut être dans plusieurs progressions
+  // progressions ChordsOnProgression[]
+
+  // Un accord peut avoir plusieurs diagrammes
+  // diagrams ChordDiagrams[]
+
+  //! Accord favorites
+  // userFavourite FavouriteChords[]
+}
+
+// // Progressions d'accords
+// model ChordsProgression {
+//   id      String  @id @default(uuid())
+//   name    String?
+//   degrees String
+
+//   // Un progression ne peut être que dans une famille
+//   family   ProgressionFamily @relation(fields: [familyId], references: [id])
+//   familyId String
+
+//   // Une progression d'accords peut avoir plusieurs accords
+//   chords ChordsOnProgression[]
+
+//   //! Progression favorites
+//     // userFavourite FavouriteChordProgressions[]
+// }
+
+// // Famille de progression d'accords
+// model ProgressionFamily {
+//   id     String              @id @default(uuid())
+//   name   String
+//   // Un degré peut être dans plusieurs gammes
+//   chords ChordsProgression[]
+// }
+
+// // Schemas d'accords
+// model ChordDiagrams {
+//   id      String @id @default(uuid())
+//   name    String
+//   imgUrl  String
+//   // Un diagram n'appartient qu'a un accord
+//   chord   Chord? @relation(fields: [chordId], references: [chordId])
+//   chordId Int
+// }
+
+// // Schemas de gammes
+// model ScaleDiagrams {
+//   id      String @id @default(uuid())
+//   name    String
+//   imgUrl  String
+//   // Un diagram n'appartient qu'a une gamme
+//   scale   Scale? @relation(fields: [scaleId], references: [scaleId])
+//   scaleId Int
+// }
+
+// //***** MANY TO MANY *****//
+// Notes dans les gammes
+model NotesOnScales {
+  note     Note?  @relation(fields: [noteName], references: [reference])
+  noteName String
+
+  scale   Scale? @relation(fields: [scaleId], references: [id])
+  scaleId Int
+
+  // Ordre des notes pour l'affichage
+  orderNumber Int
+
+  @@id([noteName, scaleId])
+}
+
+// Notes dans les accords
+model NotesOnChords {
+  note     Note?  @relation(fields: [noteName], references: [reference])
+  noteName String
+
+  chord   Chord? @relation(fields: [chordId], references: [id])
+  chordId Int
+
+  // Ordre des notes pour l'affichage
+  orderNumber Int
+
+  @@id([noteName, chordId])
+}
+
+// // Notes dans les accords
+// model ChordsOnProgression {
+//   progression   ChordsProgression? @relation(fields: [progressionId], references: [id])
+//   progressionId String
+
+//   chord   Chord? @relation(fields: [chordId], references: [chordId])
+//   chordId Int
+
+//   // Ordre des accords pour l'affichage
+//   orderNumber Int
+
+//   @@id([progressionId, chordId])
+// }
+
+model User {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+  username String @unique
+
+  role Role @default(USER)
+
+  // Un utilisateur peut avoir plusieurs avatars
+  avatar        Avatar[]
+  currentAvatar String?
+  instrument    String?
+  // phoneNumber     String? @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Confirmation de l'email
+  isEmailConfirmed       Boolean @default(false)
+
+  // Mot de passe oublié
+  isResettingPassword Boolean @default(false)
+
+  //     // //! Gammes favorites
+  //     // favouriteScale FavouriteScales[]
+  //     // //! Accords favorites
+  //     // favouriteChord FavouriteChords[]
+  //     // //! Progression favorites
+  //     // favouriteProgression FavouriteChordProgressions[]
+}
+
+// model FavouriteScales {
+//     id              Int  @id @default(autoincrement())
+//       //! Un favoris n'appartient qu'à un seul utilisateur
+//   user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   userId  String
+//       //! Un favorite n'appartient qu'à un seul utilisateur
+//   scale    Scale?   @relation(fields: [scaleId], references: [scaleId], onDelete: Cascade)
+//   scaleId  String
+// }
+// model FavouriteChords {
+//     id              Int  @id @default(autoincrement())
+//       //! Un favoris n'appartient qu'à un seul utilisateur
+//   user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   userId  String
+//       //! Un favorite n'appartient qu'à un seul utilisateur
+//   chord    Chord?   @relation(fields: [chordId], references: [chordId], onDelete: Cascade)
+//   chordId  String
+// }
+// model FavouriteChordProgressions {
+//     id              String       @id @default(uuid())
+//       //! Un favoris n'appartient qu'à un seul utilisateur
+//   user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   userId  String
+//       //! Un favorite n'appartient qu'à un seul utilisateur
+//   progression    ChordsProgression?   @relation(fields: [progressionId], references: [id], onDelete: Cascade)
+//   progressionId  String
+// }
+
+//* Table contenant tous les avatars
+model Avatar {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  imgUrl String
+
+  // Un avatar n'appartient qu'à un seul utilisateur
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model PasswordResetToken {
+  id      Int      @id @default(autoincrement())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model EmailVerificationToken {
+  id      Int      @id @default(autoincrement())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}

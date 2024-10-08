@@ -1,0 +1,2 @@
+Generateur de cuid
+npm i @paralleldrive/cuid2
