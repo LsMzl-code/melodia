@@ -259,7 +259,7 @@ model User {
 
   // Un utilisateur peut avoir plusieurs avatars
   avatar        Avatar[]
-  currentAvatar String?
+  currentAvatar String
   instrument    String?
   // phoneNumber     String? @unique
 
@@ -317,6 +317,8 @@ model Avatar {
   // Un avatar n'appartient qu'à un seul utilisateur
   user   User   @relation(fields: [userId], references: [id])
   userId String
+
+  createdAt DateTime @default(now())
 }
 
 

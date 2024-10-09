@@ -19,5 +19,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "cloudinary": "^2.5.1",
+    "react-dropzone": "^14.2.9"
+  }
 }

@@ -20,28 +20,30 @@ import { Separator } from "@/components/ui/separator"
 
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { logout } from "@/lib/auth"
-import { userType } from "@/src/types"
+
+// import { logout } from "@/src/server/data/users.query"
+import { User } from "@/src/types/users.type"
+
+import '@/public/styles/avatar.css'
+import UserAvatar from "../users/user-avatar"
 
 
 interface MobileNavProps {
-  user: userType
+  user: User | null
 }
 
 const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
-
   //*** LOGOUT ***//
   const handleLogout = async () => {
-    await logout()
+    // await logout()
   }
 
   return (
     <Sheet>
       <SheetTrigger asChild title="Menu de navigation" className="cursor-pointer">
-        <Avatar>
-          {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <div>
+          <UserAvatar currentAvatar={user?.currentAvatar ?? ''} />
+        </div>
       </SheetTrigger>
       <SheetContent side={'right'} className="w-[300px]">
         <SheetHeader>
@@ -70,8 +72,8 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
             <Link href={`/profil/${user.username}`} title="Voir mon profil" className="flex items-center justify-between mt-7 group">
               <p className="font-medium px-2 group-hover:underline underline-offset-2">{user?.username}</p>
               <Avatar className="h-5 w-5 group-hover:scale-110 duration-200">
-                {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src={user?.currentAvatar ?? ''} />
+                {/* <AvatarFallback>CN</AvatarFallback> */}
               </Avatar>
 
             </Link>
@@ -79,6 +81,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
             <div className="flex items-center justify-between mt-7">
               <p className="font-medium px-2">Visiteur</p>
               <Avatar className="h-5 w-5">
+                {/* //TODO: Mettre une image par défaut pour les visiteurs (Logo de Melodia ?) */}
                 {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>

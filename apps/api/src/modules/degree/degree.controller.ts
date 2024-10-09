@@ -6,7 +6,7 @@ import { UpdateDegreeDto } from './dto/updateDegree.dto';
 
 @ApiBearerAuth()
 @ApiTags('Degrés')
-@Controller('degree')
+@Controller('degrees')
 export class DegreeController {
   constructor(private readonly degreeService: DegreeService) { }
 

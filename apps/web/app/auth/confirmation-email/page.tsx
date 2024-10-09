@@ -1,7 +1,8 @@
-import { getCurrentUser } from "@/lib/auth";
+
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ConfirmationEmailForm from "./components/confirmation-email.form";
+import { getCurrentUser } from "@/src/server/data/users.query";
 
 //***  METADATA ***//
 export const metadata: Metadata = {

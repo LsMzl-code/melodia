@@ -9,5 +9,6 @@ export const SignUpSchema = z.object({
     .regex(/[a-zA-Z]/, { message: "Le mot de passe doit contenir une lettre" })
     .regex(/[0-9]/, { message: "Le mot de passe doit contenir un chiffre" })
     .regex(/[^a-zA-Z0-9]/, { message: 'Le mot de passe doit contenir un caractère spécial.' })
-    .trim()
+    .trim(),
+  avatar: z.string()
 })

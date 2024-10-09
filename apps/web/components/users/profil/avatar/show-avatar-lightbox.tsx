@@ -18,7 +18,6 @@ const ShowAvatarLightbox: React.FC<LightboxProps> = (
     }
   };
 
-
   return (
     <>
       <div onClick={handleClickOutside} className="fixed top-0 left-0 h-screen w-full z-50 bg-black/50">

@@ -11,13 +11,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { EditIcon, PencilLine } from "lucide-react"
+import { EditIcon } from "lucide-react"
 
 import CustomFormField from "@/components/common/custom-field"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 
-import { FormFieldsType, userType } from "@/src/types"
+import { FormFieldsType } from "@/src/types"
 //*** FORM ***//
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"

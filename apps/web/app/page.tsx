@@ -1,14 +1,13 @@
 import MobileNav from "@/components/navigation/mobile-nav";
-import { getCurrentUser } from "@/lib/auth";
-import { getAllNotes } from "@/src/server/data/notes/get-all-notes";
+import { getCurrentUser } from "@/src/server/data/users.query";
+
 
 
 const HomePage = async () => {
   //*** UTILISATEUR CONNECTE */
   const currentUser = await getCurrentUser();
 
-  
-
+  console.log('currentUser', currentUser)
   
   return (
     <div className="container mt-5">

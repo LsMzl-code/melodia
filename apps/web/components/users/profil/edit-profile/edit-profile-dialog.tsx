@@ -17,7 +17,7 @@ import CustomFormField from "@/components/common/custom-field"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 
-import { FormFieldsType, userType } from "@/src/types"
+import { FormFieldsType } from "@/src/types"
 //*** FORM ***//
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
@@ -31,9 +31,10 @@ import { EditProfileSchema } from "./edit-profile.schema"
 import SubmitButton from "@/components/forms/submit-button"
 import InstrumentMultiSelect from "@/components/instrument-multi-select"
 import { Separator } from "@/components/ui/separator"
+import { User } from "@/src/types/users.type"
 
 interface EditProfileDialogProps {
-  user: userType
+  user: User
 }
 
 const EditProfileDialog: React.FC<EditProfileDialogProps> = ({ user }) => {
@@ -88,7 +89,9 @@ const EditProfileDialog: React.FC<EditProfileDialogProps> = ({ user }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <IconButton icon={<PencilLine />} title="Modifier le profil" />
+        <Button size={'icon'} className={"bg-[#3B3B46] hover:bg-[#383C43] transition-colors"} title="Modifier le profil">
+          <PencilLine />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -117,7 +120,7 @@ const EditProfileDialog: React.FC<EditProfileDialogProps> = ({ user }) => {
               <DialogClose asChild>
                 <Button className="bg-red-primary hover:bg-red-primary/80 transition-colors">Annuler</Button>
               </DialogClose>
-              <SubmitButton label="Valider" disabled={isLoading} className="w-fit"/>
+              <SubmitButton label="Valider" disabled={isLoading} className="w-fit" />
             </div>
 
           </form>

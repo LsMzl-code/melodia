@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import React from 'react'
 import { NotesColumns } from './components/table/Columns';
 import { DataTable } from '@/components/ui/data-table';
-import { getAllNotes, getNoteById } from '@/src/server/data/notes';
+import { getAllNotes } from '@/src/server/data/notes.query';
 
 export const metadata: Metadata = {
   title: "Admin - Notes",
@@ -26,7 +26,7 @@ const AdminNotesPage = async () => {
 
   return (
     <>
-      <HeadingAdmin href={'/admin/notes/ajouter'} title={'Ajouter une note'} />
+      <HeadingAdmin href={'/admin/notes/edition'} title={'Ajouter une note'} />
 
       <section className='mx-auto p-3 md:p-5 lg:p-7'>
         {/* Data Table */}

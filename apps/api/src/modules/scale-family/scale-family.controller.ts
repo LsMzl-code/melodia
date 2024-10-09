@@ -6,7 +6,7 @@ import { CreateScaleFamilyDto } from './dto/createScaleFamily.dto';
 
 @ApiBearerAuth()
 @ApiTags('Familles de gamme')
-@Controller('scale-family')
+@Controller('scale-families')
 export class ScaleFamilyController {
   constructor(private readonly scaleFamilyService: ScaleFamilyService) { }
 

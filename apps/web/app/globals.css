@@ -53,4 +53,5 @@
   .adminLinkHover a:hover::before {
     @apply h-full;
   }
+
 }

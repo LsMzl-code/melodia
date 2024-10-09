@@ -5,7 +5,8 @@ import SignUpForm from './components/sign-up.form';
 import Image from 'next/image';
 import OAuth from '@/components/forms/auth/o-auth';
 import { Music2Icon } from 'lucide-react';
-import { getCurrentUser } from '@/lib/auth';
+import { getCurrentUser } from '@/src/server/data/users.query';
+
 
 //***  METADATA ***//
 export const metadata: Metadata = {

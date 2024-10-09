@@ -1,10 +1,10 @@
 
-import { getCurrentUser } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import NewPasswordForm from "./components/new-password.form"
 import Image from "next/image"
 import { Music2Icon } from "lucide-react"
 import { Metadata } from "next"
+import { getCurrentUser } from "@/src/server/data/users.query"
 
 
 //***  METADATA ***//

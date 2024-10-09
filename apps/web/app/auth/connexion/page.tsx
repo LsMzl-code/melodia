@@ -5,7 +5,7 @@ import OAuth from '@/components/forms/auth/o-auth'
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
-import { getCurrentUser } from '@/lib/auth';
+import { getCurrentUser } from '@/src/server/data/users.query';
 
 
 //***  METADATA ***//

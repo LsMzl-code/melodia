@@ -1,4 +1,4 @@
-import { ArchiveIcon, ChevronsLeftRightEllipsisIcon, LayoutDashboardIcon, LinkIcon, Music3Icon, MusicIcon, PianoIcon, PowerIcon, SettingsIcon, ThermometerIcon, Users2Icon, UsersIcon } from "lucide-react";
+import { ArchiveIcon, ChevronsLeftRightEllipsisIcon, LayoutDashboardIcon, LibraryIcon, LinkIcon, Music3Icon, MusicIcon, PianoIcon, PowerIcon, SettingsIcon, ThermometerIcon, Users2Icon, UsersIcon } from "lucide-react";
 
 export const AdminRoutes: { label: string, href: string, icon: React.ReactNode, title: string }[] = [
   {
@@ -8,34 +8,10 @@ export const AdminRoutes: { label: string, href: string, icon: React.ReactNode, 
     title: 'Dashboard'
   },
   {
-    label: 'notes',
-    href: '/admin/notes',
-    icon: <Music3Icon size={14}/>,
-    title: 'Notes'
-  },
-  {
-    label: 'intervalles',
-    href: '/admin/intervalles',
-    icon: <ChevronsLeftRightEllipsisIcon size={14}/>,
-    title: 'Intervalles'
-  },
-  {
-    label: 'gammes',
-    href: '/admin/gammes',
-    icon: <MusicIcon size={14}/>,
-    title: 'Gammes'
-  },
-  {
     label: 'accords',
     href: '/admin/accords',
     icon: <PianoIcon size={14}/>,
     title: 'Accords'
-  },
-  {
-    label: 'progressions',
-    href: '/admin/progressions',
-    icon: <LinkIcon size={14}/>,
-    title: 'Progressions'
   },
   {
     label: 'degrés',
@@ -44,11 +20,42 @@ export const AdminRoutes: { label: string, href: string, icon: React.ReactNode, 
     title: 'Degrés'
   },
   {
-    label: 'divers',
-    href: '/admin/divers',
-    icon: <ArchiveIcon size={14}/>,
-    title: 'Divers'
+    label: 'familles',
+    href: '/admin/familles',
+    icon: <LibraryIcon size={14}/>,
+    title: 'Familles'
   },
+  {
+    label: 'gammes',
+    href: '/admin/gammes',
+    icon: <MusicIcon size={14}/>,
+    title: 'Gammes'
+  },
+  {
+    label: 'intervalles',
+    href: '/admin/intervalles',
+    icon: <ChevronsLeftRightEllipsisIcon size={14}/>,
+    title: 'Intervalles'
+  },
+  {
+    label: 'notes',
+    href: '/admin/notes',
+    icon: <Music3Icon size={14}/>,
+    title: 'Notes'
+  },
+  {
+    label: 'progressions',
+    href: '/admin/progressions',
+    icon: <LinkIcon size={14}/>,
+    title: 'Progressions'
+  },
+  {
+    label: 'tonalites',
+    href: '/admin/tonalites',
+    icon: <ArchiveIcon size={14}/>,
+    title: 'Tonalités'
+  },
+  
   {
     label: 'utilisateurs',
     href: '/admin/utilisateurs',

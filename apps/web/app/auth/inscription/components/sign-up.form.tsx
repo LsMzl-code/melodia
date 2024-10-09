@@ -32,6 +32,7 @@ const SignUpForm = () => {
       email: "",
       password: "",
       username: "",
+      avatar: ""
     },
   })
 
@@ -39,6 +40,9 @@ const SignUpForm = () => {
   const onSubmit = async (data: z.infer<typeof SignUpSchema>) => {
     setIsLoading(true)
     try {
+      // Création d'un avatar par défaut en fonction de l'email
+      data.avatar = `https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=${data.email}?scale=100`
+      
       axios.post(`http://localhost:8000/auth/inscription`, data).then(async (res) => {
         // Creation de la session
         await createSession(res.data.userId, res.data.access_token, res.data.role)

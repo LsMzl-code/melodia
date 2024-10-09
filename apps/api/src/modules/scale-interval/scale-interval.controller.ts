@@ -5,7 +5,7 @@ import { UpdateScaleIntervalDto } from './dto/updateScaleInterval.dto';
 
 @ApiBearerAuth()
 @ApiTags('Intervalles de gamme')
-@Controller('scale-interval')
+@Controller('scale-intervals')
 export class ScaleIntervalController {
   constructor(private readonly scaleIntervalService: ScaleIntervalService) { }
 

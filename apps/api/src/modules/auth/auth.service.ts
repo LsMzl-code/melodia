@@ -22,7 +22,7 @@ export class AuthService {
 
   //*** INSCRIPTION ***//
   async signup(signupDto: SignupDto) {
-    const { email, password, username, role } = signupDto;
+    const { email, password, username, avatar } = signupDto;
 
     // Vérification de l'unicité de l'adresse email
     const existingMail = await this.prismaService.user.findUnique({
@@ -47,10 +47,23 @@ export class AuthService {
       data: {
         email,
         username,
-        role,
+        currentAvatar: avatar,
         password: hashedPassword,
       },
     });
+
+    // Ajout de l'avatar par défaut de DiceBear dans la table avatar
+    await this.prismaService.avatar.create({
+      data: {
+        imgUrl: avatar,
+        name: `${username}-avatar-1`,
+        user: {
+          connect: {
+            id: newUser.id
+          }
+        }
+      }
+    })
 
     // Ajout du token de verification d'email en base de données
     await this.prismaService.emailVerificationToken.create({

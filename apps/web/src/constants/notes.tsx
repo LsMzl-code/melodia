@@ -115,3 +115,33 @@ export const LowNoteSoundsUrl: { name: string; url: string }[] = [
   { name: "la♯", url: "/sounds/low/Ad.mp3" },
   { name: "si♯", url: "/sounds/low/Bd.mp3" },
 ]
+
+/**
+ * Les différents noms de tonalités.
+ * -
+ */
+export const TonalityNames: { id: string; name: string }[] = [
+  { id: "C", name: "C" },
+  { id: "C♯", name: "C♯" },
+
+  { id: "D♭", name: "D♭" },
+  { id: "D", name: "D" },
+  { id: "D♯", name: "D♯" },
+
+  { id: "E♭", name: "E♭" },
+  { id: "E", name: "E" },
+
+  { id: "F", name: "F" },
+  { id: "F♯", name: "F♯" },
+
+  { id: "G♭", name: "G♭" },
+  { id: "G", name: "G" },
+  { id: "G♯", name: "G♯" },
+
+  { id: "A♭", name: "A♭" },
+  { id: "A", name: "A" },
+  { id: "A♯", name: "A♯" },
+
+  { id: "B♭", name: "B♭" },
+  { id: "B", name: "B" },
+]

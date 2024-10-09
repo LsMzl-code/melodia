@@ -16,7 +16,7 @@ const TopNavMobile = () => {
   return (
     <div className="flex items-center justify-between">
       <IconButton icon={<ChevronLeft className="h-5 w-5" />} onClick={() => router.back()} title="Retour" />
-      <MobileNav />
+      {/* <MobileNav /> */}
     </div>
   )
 }

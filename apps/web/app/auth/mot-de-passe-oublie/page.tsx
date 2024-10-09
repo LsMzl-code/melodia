@@ -1,9 +1,10 @@
-import { getCurrentUser } from "@/lib/auth";
+
 import { Music2Icon } from "lucide-react";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ForgotPasswordForm from "./components/forgot-password.form";
 import Image from "next/image";
+import { getCurrentUser } from "@/src/server/data/users.query";
 
 //***  METADATA ***//
 export const metadata: Metadata = {

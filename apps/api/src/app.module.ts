@@ -39,10 +39,18 @@ import { ChordNameService } from "./modules/chord-name/chord-name.service";
 import { ScaleFamilyService } from "./modules/scale-family/scale-family.service";
 import { ChordFamilyService } from "./modules/chord-family/chord-family.service";
 import { ScaleIntervalService } from "./modules/scale-interval/scale-interval.service";
+import { CloudinaryModule } from "./modules/cloudinary/cloudinary.module";
+import { CloudinaryService } from "./modules/cloudinary/cloudinary.service";
+import { CloudinaryController } from './modules/cloudinary/cloudinary.controller';
+import { ConfigModule } from "@nestjs/config";
+import { UserService } from "./modules/user/user.service";
+
+
 
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     NoteModule,
     ScaleModule,
     ChordModule,
@@ -57,8 +65,11 @@ import { ScaleIntervalService } from "./modules/scale-interval/scale-interval.se
     ScaleIntervalModule,
     ChordIntervalModule,
     AuthModule,
-    UserModule],
-  controllers: [AppController, NoteController, ChordController, TonalityController, ScaleNameController, ChordNameController, ChordFamilyController, ScaleIntervalController],
-  providers: [AppService, ScaleService, NoteService, ChordService, TonalityService, ScaleNameService, ChordNameService, ScaleFamilyService, ChordFamilyService, ScaleIntervalService],
+    UserModule,
+    CloudinaryModule,
+  // UserModule
+],
+  controllers: [AppController, NoteController, ChordController, TonalityController, ScaleNameController, ChordNameController, ChordFamilyController, ScaleIntervalController, CloudinaryController],
+  providers: [AppService, ScaleService, NoteService, ChordService, TonalityService, ScaleNameService, ChordNameService, ScaleFamilyService, ChordFamilyService, ScaleIntervalService, CloudinaryService, UserService],
 })
 export class AppModule { }

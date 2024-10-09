@@ -24,13 +24,14 @@ const HeadingAdmin = ({ href, title }: { href?: string, title?: string }) => {
         {/* Breadcrumb */}
         <div className='flex items-end gap-2'>
           {pathSegments.map(segment => (
+            //Todo: Ajouter un lien vers la première page
             <p className={cn(segment === lastSegment && segment !== pathSegments[0] ? 'text-foreground/50 text-base' : 'text-xl', 'uppercase font-light')} key={segment}>
               {segment === lastSegment && segment !== pathSegments[0] && (<span className='text-xl mr-1'>/</span>)}
               {segment}
             </p>
           ))}
           {pathSegments.length == 1 && href && title && (
-            <Link href={href} title={title} className={cn(buttonVariants(), "w-fit h-6 bg-blue-primary hover:bg-blue-primary/80 hover:text-gray-50")}>Ajouter</Link>
+            <Link href={href} title={title} className={cn(buttonVariants(), "w-fit h-6 bg-blue-primary hover:bg-blue-primary/80 hover:text-gray-50")}>Edition</Link>
           )}
 
         </div>

@@ -3,13 +3,12 @@ import TopNavMobile from "@/components/navigation/top-nav-mobile"
 import { Button } from "@/components/ui/button"
 import AvatarMenuPopover from "@/components/users/profil/avatar/avatar-menu-popover"
 import EditProfileDialog from "@/components/users/profil/edit-profile/edit-profile-dialog"
-import { getCurrentUser } from "@/lib/auth"
-import { userType } from "@/src/types"
+import { getCurrentUser } from "@/src/server/data/users.query"
 import { ChevronDown, KeyboardMusicIcon, MusicIcon, Star } from "lucide-react"
 
 const ProfilePage = async ({ params }: { params: { username: string } }) => {
   //*** UTILISATEUR CONNECTE **/
-  const currentUser: userType = await getCurrentUser();
+  const currentUser = await getCurrentUser();
 
   //*** UTILISATEUR NON CONNECTE OU NON PROPRIETAIRE DU PROFIL **/
   if (currentUser?.username != params.username) {
@@ -25,18 +24,17 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
         {/* Heading */}
         <div className="flex items-center gap-2">
           {/* //TODO: Mettre dialog pour la photo de profil avec affichage de la photo et modification*/}
-          <AvatarMenuPopover />
+          <AvatarMenuPopover currentAvatar={currentUser?.currentAvatar} avatars={currentUser?.avatar.map(avatar => ({ imgUrl: avatar.imgUrl }))} />
 
           <div>
             <p className="text-2xl font-semibold">{currentUser?.username}</p>
-            <p className="text-sm capitalize">{currentUser?.instrument}</p>
+            <p className="text-sm capitalize">{currentUser?.instrument ?? 'Non renseigné'}</p>
           </div>
 
         </div>
 
 
         <EditProfileDialog user={currentUser} />
-
 
       </div>
 

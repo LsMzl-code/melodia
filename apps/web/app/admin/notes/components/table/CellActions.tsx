@@ -3,15 +3,7 @@ import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Edit, MoreHorizontal } from "lucide-react"
+import { MoreHorizontal } from "lucide-react"
 
 import {
   Popover,
@@ -27,11 +19,6 @@ import EditNoteDialog from "../forms/edit-note-dialog"
 import { toast } from "@/hooks/use-toast"
 import useSessionToken from "@/hooks/use-session-token"
 import axios from "axios"
-
-// import errorMessages from "@/src/errors/ErrorMessages.json";
-
-// import { toast } from "@/src/hooks/use-toast"
-// import axios from "axios"
 
 
 interface CellActionProps {

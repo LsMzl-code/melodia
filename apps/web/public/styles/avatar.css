@@ -1,0 +1,41 @@
+
+.circle-animation {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  pointer-events: none;
+}
+
+.avatar-wrapper:hover .circle-animation {
+  border-color: rgba(255, 255, 255, 0.5); /* Couleur du cercle */
+  animation: circle-animation 0.8s ease-in-out forwards;
+}
+
+/* Keyframes pour l'animation */
+@keyframes circle-animation {
+  0% {
+    transform: rotate(0deg);
+    border-top-color: rgba(253, 0, 0, 0.5); /* Le cercle démarre par le haut */
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  25% {
+    border-right-color: rgba(67, 0, 253, 0.5); /* Le cercle se construit */
+  }
+  50% {
+    border-bottom-color: rgba(223, 0, 253, 0.637);
+  }
+  75% {
+    border-left-color: rgba(202, 115, 2, 0.5);
+  }
+  100% {
+    transform: rotate(-360deg); /* Rotation dans le sens anti-horaire */
+    border-top-color: rgba(253, 0, 0, 0.5); /* Le cercle se referme en haut */
+  }
+}

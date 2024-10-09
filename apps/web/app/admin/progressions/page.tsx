@@ -1,7 +1,6 @@
 import HeadingAdmin from '@/components/admin/heading-admin';
 import { Metadata } from 'next';
 import React from 'react'
-import AddProgressionForm from './components/forms/note.form';
 
 export const metadata: Metadata = {
   title: "Admin - Progressions",
@@ -11,13 +10,13 @@ export const metadata: Metadata = {
 const AdminProgressionsPage = () => {
   return (
     <>
-      <HeadingAdmin title='Progressions' />
+      <HeadingAdmin href='/admin/progressions/edition' title='Ajouter une progression' />
 
       <section className='grid grid-cols-1 xl:grid-cols-2 mx-auto p-3 md:p-5 lg:p-7 space-y-5'>
 
         <div>Tableau</div>
 
-        <AddProgressionForm />
+        
 
       </section>
     </>

@@ -6,7 +6,7 @@ import { UpdateChordIntervalDto } from './dto/updateChordInterval.dto';
 
 @ApiBearerAuth()
 @ApiTags('Intervalles d\'accords')
-@Controller('chord-interval')
+@Controller('chord-intervals')
 export class ChordIntervalController {
   constructor(private readonly chordIntervalService: ChordIntervalService) { }
 

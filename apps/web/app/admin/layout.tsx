@@ -1,6 +1,7 @@
 import AdminNav from "@/components/navigation/admin-nav";
 import useUserRole from "@/hooks/use-user-role";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/src/server/data/users.query";
+
 import { redirect } from "next/navigation";
 
 export default async function AdminLayout({

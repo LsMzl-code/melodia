@@ -1,6 +1,9 @@
 import HeadingAdmin from '@/components/admin/heading-admin';
+import { getAllUsers } from '@/src/server/data/users.query';
 import { Metadata } from 'next';
 import React from 'react'
+import { UsersColumns } from './components/table/Columns';
+import { DataTable } from '@/components/ui/data-table';
 
 
 export const metadata: Metadata = {
@@ -9,10 +12,29 @@ export const metadata: Metadata = {
 };
 
 
-const AdminUsersPage = () => {
+const AdminUsersPage = async () => {
+  //*** DATAS ***//
+  const data = await getAllUsers()
+  if (!data) return <div>Aucun utilisateur trouvé...</div>
+  console.log('data', data)
+
+  const formattedData: UsersColumns[] = data.map(item => ({
+    id: item.id,
+    email: item.email,
+    username: item.username,
+    // currentAvatar: item.currentAvatar,
+    // instrument: item.instrument
+  }))
   return (
     <>
-      <HeadingAdmin title='Utilisateurs' />
+      <HeadingAdmin />
+
+      <section className='mx-auto p-3 md:p-5 lg:p-7'>
+        {/* Data Table */}
+        <div className="px-2 w-fit">
+          <DataTable columns={UsersColumns} data={formattedData} searchKey="username" />
+        </div>
+      </section>
     </>
   )
 }

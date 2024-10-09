@@ -10,10 +10,3 @@ export enum FormFieldsType {
   SKELETON = "skeleton",
   SELECT = "select",
 }
-
-export type userType = {
-  id: string;
-  username: string;
-  email: string;
-  instrument: string | null;
-} | null | undefined

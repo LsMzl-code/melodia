@@ -1,6 +1,5 @@
 
 import { IsEmail, IsNotEmpty, Length } from "class-validator";
-import { Role } from "src/types/role.type";
 
 export class SignupDto {
   @IsNotEmpty()
@@ -15,6 +14,7 @@ export class SignupDto {
   @Length(3, 20)
   readonly username: string;
 
+
   @IsNotEmpty()
-  readonly role: Role;
+  readonly avatar: string;
 }
