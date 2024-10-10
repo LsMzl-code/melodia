@@ -1,7 +1,10 @@
 export type Chord = {
   id: number;
-  
-  nameChord: string;
-  tonalityId: number;
-  modeId: number;
+  name: string;
+  notes: string;
+  interval: string;
+  tonality: string;
+  mode: string;
+  family: string;
+  // degree: string | null;
 }

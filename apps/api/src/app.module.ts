@@ -6,7 +6,6 @@ import { ChordIntervalModule } from "./modules/chord-interval/chord-interval.mod
 import { ChordNameModule } from "./modules/chord-name/chord-name.module";
 import { ChordModule } from "./modules/chord/chord.module";
 import { DegreeModule } from "./modules/degree/degree.module";
-import { ModeModule } from "./modules/mode/mode.module";
 import { NoteModule } from "./modules/note/note.module";
 import { ScaleFamilyModule } from "./modules/scale-family/scale-family.module";
 import { ScaleIntervalModule } from "./modules/scale-interval/scale-interval.module";
@@ -44,6 +43,7 @@ import { CloudinaryService } from "./modules/cloudinary/cloudinary.service";
 import { CloudinaryController } from './modules/cloudinary/cloudinary.controller';
 import { ConfigModule } from "@nestjs/config";
 import { UserService } from "./modules/user/user.service";
+import { MailerService } from "./modules/mailer/mailer.service";
 
 
 
@@ -56,7 +56,6 @@ import { UserService } from "./modules/user/user.service";
     ChordModule,
     PrismaModule,
     TonalityModule,
-    ModeModule,
     ScaleNameModule,
     ChordNameModule,
     ScaleFamilyModule,
@@ -70,6 +69,6 @@ import { UserService } from "./modules/user/user.service";
   // UserModule
 ],
   controllers: [AppController, NoteController, ChordController, TonalityController, ScaleNameController, ChordNameController, ChordFamilyController, ScaleIntervalController, CloudinaryController],
-  providers: [AppService, ScaleService, NoteService, ChordService, TonalityService, ScaleNameService, ChordNameService, ScaleFamilyService, ChordFamilyService, ScaleIntervalService, CloudinaryService, UserService],
+  providers: [AppService, ScaleService, NoteService, ChordService, TonalityService, ScaleNameService, ChordNameService, ScaleFamilyService, ChordFamilyService, ScaleIntervalService, CloudinaryService, UserService, MailerService],
 })
 export class AppModule { }

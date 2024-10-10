@@ -6,6 +6,9 @@ import NoteFilter from '@/components/notes/note-filter'
 import ScaleFilter from '@/components/scales/scale-filter'
 import { Metadata } from 'next'
 import React from 'react'
+import { getAllScales } from '@/src/server/data/scales.query'
+import { getAllScaleFamilies } from '@/src/server/data/families.query'
+import ScaleList from './components/scale-list'
 
 //***  METADATA ***//
 export const metadata: Metadata = {
@@ -13,20 +16,26 @@ export const metadata: Metadata = {
   description: ``,
 };
 
-const ScalesPage = () => {
+const ScalesPage = async () => {
+  //*** DATAS ***//
+  const allScales = await getAllScales()
+  const allScaleFamilies = await getAllScaleFamilies()
+  if (!allScales || !allScaleFamilies) return <div>Erreur lors de la récupération des gammes</div>
+
+
   //TODO: Voir pour mettre une pagination
   return (
     <main className="mt-5 container">
 
-      <TopNavMobile />
+      {/* <TopNavMobile /> */}
 
       <div className="w-full items-center flex justify-between mt-5">
         {/* Heading */}
         <Heading title="Les gammes" description="Parcourir et rechercher des gammes" />
 
         <div className="flex items-center gap-2">
-          <IconButton />
-          <IconButton />
+          <IconButton title='A trouver' />
+          <IconButton title='A trouver' />
         </div>
       </div>
 
@@ -36,18 +45,12 @@ const ScalesPage = () => {
         <NoteFilter />
 
         {/* Scales */}
-        <ScaleFilter />
+        <ScaleFilter scaleFamilies={allScaleFamilies} />
       </div>
 
       {/* Results */}
-      <div className='mt-5 md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
-        <ScaleBox name="Majeur" family='Classique' note='C' />
-        <ScaleBox name="Majeur Harmonique" family='Harmonique' note='F#' />
-        <ScaleBox name="Mixolydien" family='Classique' note='A' />
-        <ScaleBox name="Mineur Mélodique" family='Mélodique' note='B' />
-        <ScaleBox name="Majeur Pentatonique" family='Pentatonique' note='G' />
-        <ScaleBox name="Andalouse" family='Exotique' note='E♭' />
-      </div>
+
+      <ScaleList allScales={allScales} />
 
     </main>
   )

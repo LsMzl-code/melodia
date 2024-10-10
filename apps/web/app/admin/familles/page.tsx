@@ -1,7 +1,7 @@
 import HeadingAdmin from '@/components/admin/heading-admin';
-import { getAllChordFamilies } from '@/src/server/data/families.query';
+import { getAllChordFamilies, getAllScaleFamilies } from '@/src/server/data/families.query';
 import { Metadata } from 'next';
-import { ChordFamiliesColumns } from './components/table/Columns';
+import { ChordFamiliesColumns, ScaleFamiliesColumns } from './components/table/Columns';
 import { DataTable } from '@/components/ui/data-table';
 
 
@@ -12,14 +12,22 @@ export const metadata: Metadata = {
 
 const AdminFamiliesPage = async () => {
   //*** DATAS ***//
-  const data = await getAllChordFamilies()
-  if (!data) return <div>Aucun degrés trouvé...</div>
+  const allChordFamilies = await getAllChordFamilies();
+  const allScaleFamilies = await getAllScaleFamilies();
 
-  const formattedChordFamiliesData: ChordFamiliesColumns[] = data.map(item => ({
+  if (!allChordFamilies || !allScaleFamilies) return <div>Erreur lors de la récupération des données...</div>
+
+
+  //*** FORMATTED DATAS***//
+  const formattedChordFamiliesData: ChordFamiliesColumns[] = allChordFamilies.map(item => ({
     id: item.id,
     name: item.name,
-    chordsCount: item.chords?.length || 0,
   }))
+  const formattedScaleFamiliesData: ScaleFamiliesColumns[] = allScaleFamilies.map(item => ({
+    id: item.id,
+    name: item.name,
+  }))
+
   return (
     <>
       <HeadingAdmin href={'/admin/familles/edition'} title={'Ajouter une famille'} />
@@ -28,10 +36,12 @@ const AdminFamiliesPage = async () => {
         {/* Data Table */}
         <div className='grid grid-cols-1 md:grid-cols-2'>
           <div className="px-2 w-fit">
+            <p className='text-sm font-semibold'>Familles d'accords</p>
             <DataTable columns={ChordFamiliesColumns} data={formattedChordFamiliesData} searchKey="name" />
           </div>
           <div className="px-2 w-fit">
-            {/* <DataTable columns={ChordFamiliesColumns} data={formattedChordFamiliesData} searchKey="name" /> */}
+            <p className='text-sm font-semibold'>Familles de gammes</p>
+            <DataTable columns={ScaleFamiliesColumns} data={formattedScaleFamiliesData} searchKey="name" />
           </div>
 
         </div>

@@ -66,7 +66,6 @@ const EditNoteDialog: React.FC<EditNoteDialogProps> = ({ note }) => {
 
   //*** RECUPERATION DES VALEURS PAR DEFAUT ***//
   const defaultValues = form.formState.defaultValues
-  console.log('form', defaultValues?.soundUrl)
 
   //*** FORM SUBMIT ***//
   const onSubmit = async (data: z.infer<typeof NoteSchema>) => {

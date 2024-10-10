@@ -1,44 +1,32 @@
 'use client'
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "../ui/button";
 import { RotateCcw } from "lucide-react";
+import { ModeNames } from "@/src/constants/notes";
+import { ChordFamily } from "@/src/types/families.type";
 
-const ChordFilter = () => {
+interface ChordFilterProps {
+  chordFamilies: ChordFamily[]
+}
+
+const ChordFilter: React.FC<ChordFilterProps> = ({ chordFamilies }) => {
   //***** URL PARAMS *****//
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchMode = searchParams.get("mode");
-  const searchTonality = searchParams.get("tonality");
   const searchFamily = searchParams.get("family");
 
-  //***** STATES *****//
-  // Dièse ou bémol
-  const [armor, setArmor] = useState<string>("♯");
-  // Gamme par nom
-  const [scaleName, setScaleName] = useState<string>("");
-
-  // Dièse ou bémol
-  const handleArmor = () => {
-    if (armor === "♯") {
-      setArmor("♭");
-      //  sendFiltersToParent("♭");
-    } else if (armor === "♭") {
-      setArmor("♯");
-      //  sendFiltersToParent("♯");
-    }
-  };
+  //*** SET URL PARAMS ***//
 
   // Choix du mode
   const handleMode = (e: string) => {
@@ -47,7 +35,7 @@ const ChordFilter = () => {
       params.delete("mode");
       replace(`${pathname}?${params.toString()}`);
     } else {
-      params.set("mode", e);
+      params.set("mode", e.toLowerCase());
       replace(`${pathname}?${params.toString()}`);
     }
   };
@@ -59,15 +47,18 @@ const ChordFilter = () => {
       params.delete("family");
       replace(`${pathname}?${params.toString()}`);
     } else {
-      params.set("family", e);
+      params.set("family", e.toLowerCase());
       replace(`${pathname}?${params.toString()}`);
     }
   };
-  
-  // Choix de la gamme
-  const handleScaleByName = (e: any) => {
-    setScaleName(e);
-    // sendFiltersToParent(e);
+
+  // Reset
+  const handleResetParams = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("mode");
+    params.delete("family");
+    params.delete("tonality");
+    replace(`${pathname}?${params.toString()}`);
   };
 
   return (
@@ -76,23 +67,22 @@ const ChordFilter = () => {
       {/* Mode */}
       <div className="w-full max-w-[85px] rounded-md h-[38px]">
         <Select onValueChange={(e: string) => handleMode(e)}>
-          <SelectTrigger className="h-[36px] border-none bg-[#313131]">
+          <SelectTrigger className="h-[36px] border-none bg-[#313131]" title="Trier les gammes par mode">
             <SelectValue
               placeholder={searchMode ? searchMode : "Mode"}
               className="capitalize text-xs text-start"
             />
           </SelectTrigger>
           <SelectContent className="bg-[#313131] text-gray-50 border-foreground/10">
-            <SelectItem value="reset">Reset</SelectItem>
-            {/* {allModes.map((item) => (
-                     <SelectItem
-                        key={uuidv4()}
-                        value={item.name}
-                        className="cursor-pointer capitalize even:bg-foreground/5"
-                     >
-                        {item.name}
-                     </SelectItem>
-                  ))} */}
+            {ModeNames.map((item) => (
+              <SelectItem
+                key={item.name}
+                value={item.name}
+                className="cursor-pointer capitalize"
+              >
+                {item.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
@@ -100,102 +90,29 @@ const ChordFilter = () => {
       {/* Famille */}
       <div className="w-full max-w-[150px] rounded-md h-[38px]">
         <Select onValueChange={(e: string) => handleScaleByFamily(e)}>
-          <SelectTrigger className="h-[36px] border-none bg-[#313131]">
+          <SelectTrigger className="h-[36px] border-none bg-[#313131]" title="Trier les gammes par famille">
             <SelectValue
               placeholder={searchFamily ? searchFamily : "Famille"}
               className="capitalize text-xs"
             />
           </SelectTrigger>
           <SelectContent className="bg-[#313131] text-gray-50 border-foreground/10">
-            {/* <SelectItem value="reset">Reset</SelectItem>
-                  {allScaleFamilies.map((family) => (
-                     <SelectItem
-                        value={family.name}
-                        className="cursor-pointer capitalize even:bg-foreground/5"
-                        key={uuidv4()}
-                     >
-                        {family.name}
-                     </SelectItem>
-                  ))} */}
+            {chordFamilies.map((family) => (
+              <SelectItem
+                value={family.name}
+                className="cursor-pointer capitalize even:bg-foreground/5"
+                key={family.name}
+              >
+                {family.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
 
-      {/* Accords */}
-      <div className="w-full max-w-[190px] rounded-md h-[38px]">
-        <Select
-          onValueChange={(e: string) => handleScaleByName(e)}
-          disabled={
-            searchTonality == "" ||
-            (searchTonality == "" && searchMode != "") ||
-            (searchTonality == "" && searchFamily != "")
-          }
-        >
-          <SelectTrigger className="h-[36px] border-none bg-[#313131]">
-            <SelectValue
-              placeholder={scaleName ? scaleName : "Accords"}
-              className="capitalize text-xs"
-            />
-          </SelectTrigger>
-          <SelectContent className="bg-[#313131] text-gray-50 border-foreground/10">
-            {/* Tonalité selectionnée */}
-            {/* {searchTonality &&
-                     searchMode == "" &&
-                     searchFamily == "" &&
-                     scaleByTonality.map((item) => (
-                        <SelectItem
-                           key={uuidv4()}
-                           value={item.name.name}
-                           className="cursor-pointer capitalize bg-foreground/5"
-                        >
-                           {item.name.name}
-                        </SelectItem>
-                     ))} */}
-            {/* Mode selectionné */}
-            {/* {!searchTonality &&
-                     searchMode != "" &&
-                     searchFamily == "" &&
-                     scaleByMode.map((item) => (
-                        <SelectItem
-                           key={uuidv4()}
-                           value={item.name}
-                           className="cursor-pointer capitalize bg-foreground/5"
-                        >
-                           {item.name}
-                        </SelectItem>
-                     ))} */}
-            {/* Tonalité et mode selectionnés */}
-            {/* {searchTonality &&
-                     searchMode != "" &&
-                     searchFamily == "" &&
-                     scaleByTonalityAndMode.map((item) => (
-                        <SelectItem
-                           key={uuidv4()}
-                           value={item.name.name}
-                           className="cursor-pointer capitalize bg-foreground/5"
-                        >
-                           {item.name.name}
-                        </SelectItem>
-                     ))} */}
-            {/* Tonalité et famille selectionnés */}
-            {/* {searchTonality &&
-                     searchMode == "" &&
-                     searchFamily != "" &&
-                     scaleByTonalityAndFamily.map((item) => (
-                        <SelectItem
-                           key={uuidv4()}
-                           value={item.name.name}
-                           className="cursor-pointer capitalize bg-foreground/5"
-                        >
-                           {item.name.name}
-                        </SelectItem>
-                     ))} */}
-          </SelectContent>
-        </Select>
-      </div>
 
       {/* Reset */}
-      <Button className="h-9 w-9 bg-[#313131] p-0">
+      <Button className="h-9 w-9 bg-[#313131] p-0" onClick={handleResetParams} title="Réinitialiser les filtres">
         <RotateCcw className="h-5 w-5" />
       </Button>
 

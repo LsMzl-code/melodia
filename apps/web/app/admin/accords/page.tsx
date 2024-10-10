@@ -19,9 +19,12 @@ const AdminChordsPage = async () => {
 
   const formattedData: ChordsColumns[] = data.map(item => ({
     id: item.id,
-    name: item.nameChord,
-    tonalityId: item.tonalityId,
-    modeId: item.modeId
+    name: item.name,
+    tonality: item.tonality,
+    mode: item.mode,
+    notes: item.notes,
+    family: item.family,
+    interval: item.interval
   }))
   return (
     <>

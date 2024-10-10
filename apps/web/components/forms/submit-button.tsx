@@ -6,12 +6,13 @@ interface SubmitButtonProps {
   disabled: boolean;
   label: string;
   className?: string;
+  onClick?: () => void;
 }
 
-const SubmitButton = ({ disabled, label, className }: SubmitButtonProps) => {
+const SubmitButton = ({ disabled, label, className, onClick }: SubmitButtonProps) => {
   return (
-    <Button type="submit" className={cn("w-full bg-blue-primary text-gray-50 hover:bg-blue-primary/80 transition-colors", className)} disabled={disabled}>
-      {disabled ? <Loader2Icon className="mr-2 h-4 w-4 animate-spin" /> : label}
+    <Button type="submit" className={cn("w-full bg-blue-primary text-gray-50 hover:bg-blue-primary/80 transition-colors", className)} disabled={disabled} onClick={onClick}>
+      {disabled ? <Loader2Icon className="h-5 w-5 animate-spin" /> : label}
     </Button>
 
   )

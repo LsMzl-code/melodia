@@ -4,9 +4,12 @@ import Heading from '@/components/common/heading';
 import IconButton from '@/components/common/icon-button';
 import TopNavMobile from '@/components/navigation/top-nav-mobile';
 import NoteFilter from '@/components/notes/note-filter';
+import { getAllChords } from '@/src/server/data/chords.query';
+import { getAllChordFamilies } from '@/src/server/data/families.query';
 
 import { Metadata } from 'next';
 import React from 'react'
+import ChordList from './components/chord-list';
 
 
 //***  METADATA ***//
@@ -15,20 +18,24 @@ export const metadata: Metadata = {
   description: ``,
 };
 
-const ChordsPage = () => {
+const ChordsPage = async () => {
+  //*** DATAS ***//
+  const allChords = await getAllChords()
+  const allChordFamilies = await getAllChordFamilies()
+  if (!allChords || !allChordFamilies) return <div>Erreur lors de la récupération des accords</div>
   //TODO: Voir pour mettre une pagination
   return (
     <main className="mt-5 container">
 
-      <TopNavMobile />
+      {/* <TopNavMobile /> */}
 
       <div className="w-full items-center flex justify-between mt-5">
         {/* Heading */}
         <Heading title="Les accords" description="Parcourir et rechercher des accords" />
 
         <div className="flex items-center gap-2">
-          <IconButton />
-          <IconButton />
+          <IconButton title='A trouver' />
+          <IconButton title='A trouver' />
         </div>
       </div>
 
@@ -38,18 +45,12 @@ const ChordsPage = () => {
         <NoteFilter />
 
         {/* Scales */}
-        <ChordFilter />
+        <ChordFilter  chordFamilies={allChordFamilies}/>
       </div>
 
       {/* Results */}
-      <div className='mt-5 md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
-        <ChordBox name="min7b5" family='Classique' tonality='C' />
-        <ChordBox name="sus4" family='Harmonique' tonality='F#' />
-        <ChordBox name="majeur" family='Classique' tonality='A' />
-        <ChordBox name="dim7" family='Mélodique' tonality='B' />
-        <ChordBox name="Majeur Pentatonique" family='Pentatonique' tonality='G' />
-        <ChordBox name="Andalouse" family='Exotique' tonality='E♭' />
-      </div>
+      
+      <ChordList allChords={allChords}/>
 
     </main>
   )

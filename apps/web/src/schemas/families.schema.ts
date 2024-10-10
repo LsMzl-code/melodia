@@ -8,12 +8,6 @@ import { z } from "zod";
 export const AllChordFamiliesSchema = z.array(z.object({
   id: z.number(),
   name: z.string(),
-  chords: z.array(z.object({
-    id: z.number(),
-    nameChord: z.string(),
-    tonalityId: z.number(),
-    modeId: z.number(),
-  })),
 }))
 
 /**
@@ -24,12 +18,6 @@ export const AllChordFamiliesSchema = z.array(z.object({
 export const SingleChordFamilySchema = z.object({
   id: z.number(),
   name: z.string(),
-  chords: z.array(z.object({
-    id: z.number(),
-    nameChord: z.string(),
-    tonalityId: z.number(),
-    modeId: z.number(),
-  }))
 })
 
 /**
@@ -40,22 +28,6 @@ export const SingleChordFamilySchema = z.object({
 export const AllScaleFamiliesSchema = z.array(z.object({
   id: z.number(),
   name: z.string(),
-  scales: z.array(z.object({
-    id: z.number(),
-    nameScale: z.string(),
-    notes: z.array(z.object({
-      id: z.number(),
-      name: z.string(),
-      reference: z.string(),
-      type: z.string(),
-      soundUrl: z.string(),
-    })),
-    intervalId: z.number(),
-    tonalityId: z.number(),
-    modeId: z.number(),
-    scaleFamilyId: z.number(),
-    degree: z.string(),
-  })),
 }))
 
 /**
@@ -66,20 +38,4 @@ export const AllScaleFamiliesSchema = z.array(z.object({
 export const SingleScaleFamilySchema = z.object({
   id: z.number(),
   name: z.string(),
-  scales: z.array(z.object({
-    id: z.number(),
-    nameScale: z.string(),
-    notes: z.array(z.object({
-      id: z.number(),
-      name: z.string(),
-      reference: z.string(),
-      type: z.string(),
-      soundUrl: z.string(),
-    })),
-    intervalId: z.number(),
-    tonalityId: z.number(),
-    modeId: z.number(),
-    scaleFamilyId: z.number(),
-    degree: z.string(),
-  })),
 })

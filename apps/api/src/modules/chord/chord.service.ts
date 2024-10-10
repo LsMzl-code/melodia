@@ -2,7 +2,6 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateChordDto } from './dto/createChord.dto';
 import { UpdateChordDto } from './dto/updateChord.dto';
-import { Note } from '@prisma/client';
 import { Chord } from 'src/entities/chord.entity';
 
 
@@ -28,66 +27,20 @@ export class ChordService {
 
   //*** CREATE CHORD ***//
   async createChord(createChordDto: CreateChordDto): Promise<{ message: string }> {
-    const { name, notes, mode, tonality, interval, chordFamily } = createChordDto;
+    const { name,tonality } = createChordDto;
 
     // Verification de la non-existence de la note
     const existingChord = await this.prismaService.chord.findFirst({
-      where: {
-        name: { name },
-        tonalityId: tonality
-      }
+      where: { name, tonality }
     })
     if (existingChord) throw new ConflictException('Cet accord existe déjà');
 
     // Création de l'accord
-    const chord = this.prismaService.chord.create({
+    await this.prismaService.chord.create({
       data: {
-        name: {
-          connect: {
-            id: Number(name)
-          }
-        },
-        tonality: {
-          connect: {
-            id: tonality,
-          },
-        },
-        mode: {
-          connect: {
-            id: mode,
-          },
-        },
-        chordInterval: {
-          connect: {
-            id: interval,
-          },
-        },
-        chordFamily: {
-          connect: {
-            id: chordFamily,
-          }
-        }
+        ...createChordDto
       }
     })
-
-    //TODO: Faire avec CreateMany
-    // Ajout des notes dans l'accord' crée
-    notes.map(
-      async (note, index) => await this.prismaService.notesOnChords.create({
-        data: {
-          note: {
-            connect: {
-              reference: note
-            }
-          },
-          chord: {
-            connect: {
-              id: (await chord).id,
-            },
-          },
-          orderNumber: index,
-        }
-      }))
 
     return { message: 'Accord créé avec succès' };
 

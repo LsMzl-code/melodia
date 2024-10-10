@@ -10,48 +10,23 @@ datasource db {
 model Tonality {
   id     Int     @id @default(autoincrement())
   name   String  @unique
-  // Une tonalité appartient à plusieurs gammes
-  scales Scale[]
-  // Une tonalité appartient à plusieurs accords
-  chords Chord[]
 }
 
-model Mode {
-  id     Int     @id @default(autoincrement())
-  name   String  @unique
-  // Un mode paut avoir plusieurs gammes
-  scales Scale[]
-  // Un mode peut avoir plusieurs accords
-  chords Chord[]
-}
-
+//* Gammes
 model Scale {
   id Int @id @default(autoincrement())
-
-  // Une gamme a plusieurs notes
-  notes NotesOnScales[]
+  name String
+  notes String
 
   // Une gamme n'a qu'un intervalle
-  interval   ScaleInterval @relation(fields: [intervalId], references: [id])
-  intervalId Int
+  interval String
 
   // Une gamme appartient n'a qu'une tonalité
-  tonality   Tonality @relation(fields: [tonalityId], references: [id])
-  tonalityId Int
-  // Une gamme n'a qu'un mode
-  mode       Mode     @relation(fields: [modeId], references: [id])
-  modeId     Int
-
-  // Une gamme ne peut être que dans une famille de gamme
-  scaleFamily   ScaleFamily @relation(fields: [scaleFamilyId], references: [id])
-  scaleFamilyId Int
-
+  tonality String
+  mode String
+  family String
   degree String?
-
-  // Une gamme n'a qu'un seul nom
-  name      ScaleName @relation(fields: [nameScale], references: [name])
-  nameScale String
-
+  diagram String?
   // Une gamme peut avoir plusieurs diagrammes
   // diagrams ScaleDiagrams[]
 
@@ -59,34 +34,29 @@ model Scale {
   // userFavourite FavouriteScales[]
 }
 
+//* Nom des gammes
 model ScaleName {
   id     Int     @id @default(autoincrement())
   name   String  @unique
-  // Un nom peut être dans plusieurs gammes
-  scales Scale[]
+
 }
 
+//* Nom d'accords
 model ChordName {
   id     Int     @id @default(autoincrement())
   name   String  @unique
-  // Un nom peut être dans plusieurs accords
-  chords Chord[]
 }
 
-// Famille de gamme (exotique, japonaise...)
+//* Famille de gamme (exotique, japonaise...)
 model ScaleFamily {
   id     Int     @id @default(autoincrement())
   name   String
-  // Une famille peut être dans plusieurs gammes
-  scales Scale[]
 }
 
-// Famille de gamme (exotique, japonaise...)
+//* Famille d'accord (septième, neuvième...)
 model ChordFamily {
   id     Int     @id @default(autoincrement())
   name   String
-  // Une famille peut être dans plusieurs accords
-  chords Chord[]
 }
 
 model Note {
@@ -95,14 +65,8 @@ model Note {
   reference String @unique
   // Note grave ou aïgue
   type      String
-
   // Son unique de la note
   soundUrl String
-
-  // Une note peut être dans plusieurs gammes
-  scales NotesOnScales[]
-  // Une note peut être dans plusieurs accords
-  chords NotesOnChords[]
 }
 
 model Degree {
@@ -114,42 +78,36 @@ model ScaleInterval {
   id      Int     @id @default(autoincrement())
   name    String
   details String
-  // Un degré peut être dans plusieurs gammes
-  scales  Scale[]
 }
 
 model ChordInterval {
   id      Int     @id @default(autoincrement())
   name    String
   details String
-  // Un degré peut être dans plusieurs gammes
-  chords  Chord[]
 }
 
 model Chord {
   id        Int       @id @default(autoincrement())
-  // Un accord n'a qu'un seul nom
-  name      ChordName @relation(fields: [nameChord], references: [name])
-  nameChord String
+  //* Majeur, Mineur mélodique, Andalouse...
+  name String
 
-  // Un accord a plusieurs notes
-  notes NotesOnChords[]
+  notes String
 
-  // Une accord appartient n'a qu'une tonalité
-  tonality   Tonality @relation(fields: [tonalityId], references: [id])
-  tonalityId Int
+  //* Majeur, mineur, etc...
+  mode String
 
-  // Un accord n'a qu'un mode
-  mode   Mode @relation(fields: [modeId], references: [id])
-  modeId Int
+  //* C, Db, F# etc...
+  tonality String
 
   // Un accord n'a qu'une liste d'intervalles
-  chordInterval   ChordInterval @relation(fields: [chordIntervalId], references: [id])
-  chordIntervalId Int
+  interval String
 
   // Une gamme ne peut être que dans une famille de gamme
-  chordFamily   ChordFamily @relation(fields: [chordFamilyId], references: [id])
-  chordFamilyId Int
+  //* Classique, Harmonique, Pentatonique...
+  family String
+
+  //* Schéma sur manche de guitare
+  diagram String?
 
   // Un accord peut être dans plusieurs progressions
   // progressions ChordsOnProgression[]
@@ -207,33 +165,7 @@ model Chord {
 // }
 
 // //***** MANY TO MANY *****//
-// Notes dans les gammes
-model NotesOnScales {
-  note     Note?  @relation(fields: [noteName], references: [reference])
-  noteName String
 
-  scale   Scale? @relation(fields: [scaleId], references: [id])
-  scaleId Int
-
-  // Ordre des notes pour l'affichage
-  orderNumber Int
-
-  @@id([noteName, scaleId])
-}
-
-// Notes dans les accords
-model NotesOnChords {
-  note     Note?  @relation(fields: [noteName], references: [reference])
-  noteName String
-
-  chord   Chord? @relation(fields: [chordId], references: [id])
-  chordId Int
-
-  // Ordre des notes pour l'affichage
-  orderNumber Int
-
-  @@id([noteName, chordId])
-}
 
 // // Notes dans les accords
 // model ChordsOnProgression {
@@ -312,7 +244,8 @@ model User {
 model Avatar {
   id     Int    @id @default(autoincrement())
   name   String @unique
-  imgUrl String
+  imgUrl String @unique
+  publicId String? @unique
 
   // Un avatar n'appartient qu'à un seul utilisateur
   user   User   @relation(fields: [userId], references: [id])
@@ -321,12 +254,13 @@ model Avatar {
   createdAt DateTime @default(now())
 }
 
-
+//* Rôle des utilisateurs
 enum Role {
   USER
   ADMIN
 }
 
+//* Token de réinitialisation de mot de passe utilisateur
 model PasswordResetToken {
   id      Int      @id @default(autoincrement())
   email   String
@@ -336,6 +270,7 @@ model PasswordResetToken {
   @@unique([email, token])
 }
 
+//* Token de vérification de l'email utilisateur
 model EmailVerificationToken {
   id      Int      @id @default(autoincrement())
   email   String

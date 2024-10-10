@@ -24,13 +24,15 @@ const AdminIntervalsPage = async () => {
     id: item.id,
     name: item.name,
     details: item.details,
-    chordsCount: item.chords.length || 0,
+    // chordsCount: item.chords?.length || 0,
+    chordsCount:  0,
   }))
   const formattedScaleIntervalsData: ScaleIntervalColumns[] = scalesIntervaldata.map(item => ({
     id: item.id,
     name: item.name,
     details: item.details,
-    scalesCount: item.scales.length || 0,
+    // scalesCount: item.scales?.length || 0,
+    scalesCount:  0,
   }))
 
 
@@ -40,7 +42,7 @@ const AdminIntervalsPage = async () => {
 
       <section className='grid grid-cols-1 xl:grid-cols-2 mx-auto p-3 md:p-5 lg:p-7'>
         {/* Data Table */}
-        <div className='grid grid-cols-1 md:grid-cols-2'>
+        <div className='grid grid-cols-1 md:grid-cols-2 xl:gap-[200px]'>
           <div className="px-2 w-fit">
             <DataTable columns={ChordsIntervalColumns} data={formattedChordIntervalsData} searchKey="name" />
           </div>

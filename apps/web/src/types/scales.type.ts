@@ -1,12 +1,11 @@
-import { Note } from "./notes";
 
 export type Scale = {
   id: number;
-  nameScale: string;
-  notes: Note[];
-  intervalId: number;
-  tonalityId: number;
-  modeId: number;
-  scaleFamilyId: number;
-  degree: string;
+  name: string;
+  notes: string;
+  interval: string;
+  tonality: string;
+  mode: string;
+  family: string;
+  degree: string | null;
 }

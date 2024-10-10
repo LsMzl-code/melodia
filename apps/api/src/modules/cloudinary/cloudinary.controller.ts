@@ -1,7 +1,10 @@
-import { Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CloudinaryService } from './cloudinary.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from '../user/user.service';
+import { Request } from 'express';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+
 
 @Controller('avatars')
 export class CloudinaryController {
@@ -12,15 +15,23 @@ export class CloudinaryController {
 
   //*** AJOUT D'UNE IMAGE ***//
   @Post('upload')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('imgUrl')) // => Nom du champ dans le formulaire
-  async uploadImage(@UploadedFile() file: Express.Multer.File) {
+  async uploadImage(@UploadedFile() file: Express.Multer.File, @Req() request: Request) {
     try {
+      // Upload de l'image sur cloudinary
       const result = await this.cloudinaryService.uploadImage(file);
-      // TODO récupérer l'url de l'image et l'ajouter dans la table avatar avec userservice puis définir cette image en currentAvatar
+      if (!result) throw new Error("Erreur lors de l'upload de l'image")
+
+      // Récupération de l'url, publicId et id de l'utilisateur connecté
       const secureUrl = result.secure_url;
-      const url = result.url;
-      
-      return { result: { secureUrl: result.secure_url, url: result.url }, message: "Image uploadée avec succès" };
+      const publicId = result.public_id;
+      const userId = request.user['userId']
+
+      // Ajout de l'image à la table avatar avec userservice
+      await this.userService.createAvatar(secureUrl, publicId, userId);
+
+      return { message: "Image uploadée avec succès" };
     } catch (error) {
       console.log("Erreur lors de l'upload de l'image", error);
     }

@@ -1,7 +1,10 @@
 export class Chord {
   id: number;
-  
-  nameChord: string;
-  tonalityId: number;
-  modeId: number;
+  name: string;
+  notes: string;
+  mode: string;
+  tonality: string;
+  interval: string;
+  family: string;
+  diagram: string;
 }

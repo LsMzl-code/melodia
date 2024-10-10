@@ -4,10 +4,11 @@ import { CloudinaryController } from './cloudinary.controller';
 import { CloudinaryProvider } from './cloudinary.provider';
 import { UserService } from '../user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { MailerService } from '../mailer/mailer.service';
 
 
 @Module({
-  providers: [CloudinaryService, CloudinaryProvider, UserService, PrismaService],
+  providers: [CloudinaryService, CloudinaryProvider, UserService, PrismaService, MailerService],
   exports: [CloudinaryService, CloudinaryProvider],
   controllers: [CloudinaryController]
 })

@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const ChordIntervalSchema = z.object({
+export const IntervalSchema = z.object({
   name: z.string(),
   details: z.string(),
 })

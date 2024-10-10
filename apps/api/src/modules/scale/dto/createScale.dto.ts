@@ -1,23 +1,36 @@
-import { IsArray, IsNotEmpty } from "class-validator";
+import { IsArray, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateScaleDto {
   @IsNotEmpty()
+  @IsString()
   readonly name: string;
 
   @IsNotEmpty()
-  readonly mode: number;
+  @IsString()
+  readonly mode: string;
 
   @IsNotEmpty()
-  readonly tonality: number;
+  @IsString()
+  readonly tonality: string;
 
   @IsNotEmpty()
-  readonly interval: number;
+  @IsString()
+  readonly interval: string;
 
   @IsNotEmpty()
-  readonly scaleFamily: number;
+  @IsString()
+  readonly family: string;
 
   @IsNotEmpty()
-  @IsArray()
-  readonly notes: string[];
+  @IsString()
+  readonly notes: string;
+
+  @IsOptional()
+  @IsString()
+  readonly diagram: string;
+
+  @IsOptional()
+  @IsString()
+  readonly degree: string;
 
 }

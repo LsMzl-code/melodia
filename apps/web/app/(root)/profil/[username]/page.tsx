@@ -1,10 +1,10 @@
 import IconButton from "@/components/common/icon-button"
 import TopNavMobile from "@/components/navigation/top-nav-mobile"
 import { Button } from "@/components/ui/button"
-import AvatarMenuPopover from "@/components/users/profil/avatar/avatar-menu-popover"
-import EditProfileDialog from "@/components/users/profil/edit-profile/edit-profile-dialog"
+import EditProfileDialog from "@/app/(root)/profil/[username]/components/forms/edit-profile/edit-profile-dialog"
 import { getCurrentUser } from "@/src/server/data/users.query"
 import { ChevronDown, KeyboardMusicIcon, MusicIcon, Star } from "lucide-react"
+import AvatarMenuPopover from "./components/avatar-menu-popover"
 
 const ProfilePage = async ({ params }: { params: { username: string } }) => {
   //*** UTILISATEUR CONNECTE **/
@@ -15,25 +15,45 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
     return <p>404</p>
   }
 
+  //*** FORMATTED DATAS ***//
+  const formattedInstruments = currentUser?.instrument?.split(',')
+
   return (
     <main className="mt-5 container">
 
       <TopNavMobile />
 
-      <div className="w-full items-center flex justify-between my-5">
+      <div className="w-full items-center flex justify-between my-10">
         {/* Heading */}
         <div className="flex items-center gap-2">
-          {/* //TODO: Mettre dialog pour la photo de profil avec affichage de la photo et modification*/}
+          {/* Menu de photo de profil utilisateur */}
           <AvatarMenuPopover currentAvatar={currentUser?.currentAvatar} avatars={currentUser?.avatar.map(avatar => ({ imgUrl: avatar.imgUrl }))} />
 
+          {/* Informations de l'utilisateur */}
           <div>
             <p className="text-2xl font-semibold">{currentUser?.username}</p>
-            <p className="text-sm capitalize">{currentUser?.instrument ?? 'Non renseigné'}</p>
+            {/* Instruments */}
+            <span className="flex items-center gap-1">
+              {currentUser?.instrument == '' && (
+                <p className="text-sm capitalize">
+                  Non renseigné
+                </p>
+              )}
+              {formattedInstruments?.map((instrument) => (
+                <p key={instrument} className="text-sm capitalize">
+                  {instrument == 'guitare' && 'Guitariste'}
+                  {instrument == 'piano' && 'Pianiste'}
+                  {instrument == 'basse' && 'Bassiste'}
+                  {instrument == 'chant' && 'Chanteur'}
+                  {formattedInstruments.length > 1 && formattedInstruments.indexOf(instrument) < formattedInstruments.length - 1 && ', '}
+                </p>
+              ))}
+            </span>
           </div>
 
         </div>
 
-
+        {/* Menu de modification du profil */}
         <EditProfileDialog user={currentUser} />
 
       </div>

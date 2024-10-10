@@ -17,26 +17,18 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { UploadAvatarSchema } from "@/app/(root)/profil/components/user-profile.schema";
+
+
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import CloudinaryUploader from "./cloudinary-uploader";
-import SubmitButton from "@/components/forms/submit-button";
-import { FormFieldsType } from "@/src/types";
-import CustomFormField from "@/components/common/custom-field";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import useSessionToken from "@/hooks/use-session-token";
+import { UploadAvatarSchema } from "./user-profile.schema";
+import SubmitButton from "@/components/forms/submit-button";
 
 
 const AddAvatarDialog = () => {
@@ -53,12 +45,7 @@ const AddAvatarDialog = () => {
   const form = useForm<z.infer<typeof UploadAvatarSchema>>({
     resolver: zodResolver(UploadAvatarSchema),
     defaultValues: {
-      file: null
-      // imgUrl: {
-      //   name: '',
-      //   size: 0,
-      //   type: null
-      // }
+      imgUrl: null
     },
   });
 
@@ -68,13 +55,6 @@ const AddAvatarDialog = () => {
 
     if (selectedFile) {
       try {
-        // Valider le fichier avec Zod
-        // UploadAvatarSchema.parse({
-        //   name: selectedFile.name,
-        //   size: selectedFile.size,
-        //   type: selectedFile.type,
-        // });
-
         setFile(selectedFile);
 
         // Créer une URL temporaire pour l'aperçu de l'image
@@ -121,6 +101,7 @@ const AddAvatarDialog = () => {
     // Validation du fichier
     const validateError = validateFile(file)
     if (validateError) {
+      setIsLoading(false)
       toast({
         title: 'Erreur',
         description: validateError,
@@ -128,14 +109,25 @@ const AddAvatarDialog = () => {
       })
       return
     }
-
-    data.file = file
-
     const formData = new FormData();
-    formData.append('imgUrl', data.file);
+    formData.append('imgUrl', file);
+
 
     try {
-      axios.post(`http://localhost:8000/avatars/upload`, formData)
+      // Récupération du token de l'utilisateur
+      const userToken = await useSessionToken()
+      if (!userToken) return null
+
+      axios.post(`http://localhost:8000/avatars/upload`, formData,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${userToken}`
+          },
+
+        }
+      )
         .then(async (res) => {
           setIsLoading(false)
           router.refresh()
@@ -162,7 +154,6 @@ const AddAvatarDialog = () => {
     }
   }
 
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -175,6 +166,7 @@ const AddAvatarDialog = () => {
         </DialogHeader>
 
         <Separator className="h-[0.5px] bg-foreground/30" />
+
 
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="w-full border-2 border-dashed border-blue-primary/20 rounded-md p-4 flex flex-col items-center justify-center h-[400px] bg-[#2A2B34] cursor-pointer hover:bg-[#2A2B34]/70 transition-colors relative">
@@ -196,35 +188,13 @@ const AddAvatarDialog = () => {
               )}
             </Label>
           </div>
+          <div className="ml-auto space-x-2 ">
+            <DialogClose asChild>
+              <Button className="bg-red-primary hover:bg-red-primary/80 transition-colors">Annuler</Button>
+            </DialogClose>
+            <SubmitButton label="Valider" disabled={isLoading} className="w-fit" />
+          </div>
         </form>
-
-
-        {/* Sélection de la photo */}
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            {/* <CustomFormField
-              control={form.control}
-              fieldType={FormFieldsType.SKELETON}
-              name="imgUrl"
-              label="Ajouter un document"
-              renderSkeleton={(field) => (
-                <FormControl>
-                  <CloudinaryUploader
-                    files={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-              )}
-            /> */}
-            <div className="mt-5 space-x-2 ml-auto">
-              <DialogClose asChild>
-                <Button className="bg-red-primary hover:bg-red-primary/80 transition-colors">Annuler</Button>
-              </DialogClose>
-              <SubmitButton label="Valider" disabled={isLoading} className="w-fit" />
-            </div>
-          </form>
-        </Form>
-
 
       </DialogContent>
     </Dialog>

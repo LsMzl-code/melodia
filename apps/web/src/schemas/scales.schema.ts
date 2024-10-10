@@ -7,19 +7,13 @@ import { z } from "zod";
  */
 export const AllScalesSchema = z.array(z.object({
   id: z.number(),
-  nameScale: z.string(),
-  notes: z.array(z.object({
-    id: z.number(),
-    name: z.string(),
-    reference: z.string(),
-    type: z.string(),
-    soundUrl: z.string(),
-  })),
-  intervalId: z.number(),
-  tonalityId: z.number(),
-  modeId: z.number(),
-  scaleFamilyId: z.number(),
-  degree: z.string(),
+  name: z.string(),
+  notes: z.string(),
+  interval: z.string(),
+  tonality: z.string(),
+  mode: z.string(),
+  family: z.string(),
+  degree: z.string().nullable(),
 }))
 
 /**
@@ -29,17 +23,11 @@ export const AllScalesSchema = z.array(z.object({
  */
 export const SingleScaleSchema = z.object({
   id: z.number(),
-  nameScale: z.string(),
-  notes: z.array(z.object({
-    id: z.number(),
-    name: z.string(),
-    reference: z.string(),
-    type: z.string(),
-    soundUrl: z.string(),
-  })),
-  intervalId: z.number(),
-  tonalityId: z.number(),
-  modeId: z.number(),
-  scaleFamilyId: z.number(),
-  degree: z.string(),
+  name: z.string(),
+  notes: z.string(),
+  interval: z.string(),
+  tonality: z.string(),
+  mode: z.string(),
+  family: z.string(),
+  degree: z.string().nullable(),
 })

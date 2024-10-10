@@ -6,36 +6,45 @@ import { playNote, playNotes } from '@/src/functions/player';
 import { Button } from '../ui/button';
 import NoteButton from '../notes/note-button';
 import { cn } from '@/lib/utils';
+import { NoteNames } from '@/src/constants/notes';
 
 
 interface ScaleBoxProps {
   name: string;
   family: string;
-  note: string;
-  // notes: {name: string; soundUrl: string;}[]
+  tonality: string;
+  notes: string
 }
 
-const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, note }) => {
+const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, tonality, notes }) => {
+
   //*** STATES ***//
   const [isOpen, setIsOpen] = useState(false);
 
   //***** LECTURE AUDIO DES NOTES *****//
-  // Lecture des gammes ( toutes les notes)
   const handlePlayTonalityNotes = (sounds: Array<string> | undefined) => {
-    playNotes(sounds);
+    playNotes(sounds, 400);
   };
 
   // Lecture audio d'une note
   const handlePlayNote = (soundUrl: string) => {
-    playNote(note);
+    playNote(soundUrl);
   };
+
+  //*** RECUPERATION DES NOTES ***//
+  const allNotes = NoteNames;
+  const notesArray = notes.split(',').map(note => note.trim());
+
+  const scaleNotes = allNotes.filter(note => notesArray.includes(note.name))
+
+
 
   return (
     <div className='flex flex-col gap-1'>
       <div className='w-full rounded-md bg-[#2A2B34] py-1.5 pr-1.5 flex items-center justify-start'>
 
         <div className='h-10 w-12 flex items-center justify-center ml-1.5'>
-          <p className={cn('text-2xl font-semibold uppercase', isOpen && 'mb-[45px]')}>{note}</p>
+          <p className={cn('text-2xl font-semibold uppercase', isOpen && 'mb-[45px]')}>{tonality}</p>
         </div>
         {/* </div> */}
         <div className='rounded-md bg-background p-1.5 flex flex-col gap-2 w-full'>
@@ -46,8 +55,9 @@ const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, note }) => {
               {/* //TODO: Lecture des notes */}
               {/* Play button */}
               <Button
-                // onClick={() => handlePlayTonalityNotes()} 
-                className='bg-[#191919] h-9 w-9 p-0'
+                onClick={() => handlePlayTonalityNotes(scaleNotes.map(note => note.soundUrl))}
+                className='bg-[#191919] h-9 w-9 p-0 hover:bg-indigo-600'
+                title='Ecouter les notes de la gamme'
               >
                 <PlayIcon className='h-5 w-5' />
               </Button>
@@ -59,12 +69,13 @@ const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, note }) => {
             </div>
 
             {/* Right */}
-            <div className='flex items-center gap-1'>
+            <div className='flex items-center gap-1.5'>
               {/* //TODO: Element qui coulisse avec notes affichées */}
               {/* Expand Button */}
-              <IconButton icon={isOpen ? (<ChevronUp className="h-5 w-5" />) : (<ChevronDown className="h-5 w-5" />)} onClick={() => setIsOpen(!isOpen)} title='Afficher les notes' />
+              <IconButton className='group h-9 w-9' icon={isOpen ? (<ChevronUp className="h-5 w-5 group-hover:animate-bounce" />) : (<ChevronDown className="h-5 w-5 group-hover:animate-bounce" />)} onClick={() => setIsOpen(!isOpen)} title='Afficher les notes' />
+
               {/* Scale page */}
-              <IconButton icon={<Eye className="h-5 w-5" />} href={`/gammes/${note}`} title='Voir les gammes' className='hover:bg-cyan-500' />
+              <IconButton icon={<Eye className="h-5 w-5" />} href={`/gammes/${tonality}`} title='Page de détails de la gamme' className='hover:bg-blue-primary h-9 w-9' />
             </div>
           </div>
           {/* Bottom */}
@@ -72,13 +83,9 @@ const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, note }) => {
           {isOpen && (
             //! Map sur les notes de la gamme
             <div className="w-full flex items-center justify-start gap-1">
-              <NoteButton note='C' onClick={() => handlePlayNote('C')} />
-              <NoteButton note='D' onClick={() => handlePlayNote('D')} />
-              <NoteButton note='E' onClick={() => handlePlayNote('E')} />
-              <NoteButton note='F' onClick={() => handlePlayNote('F')} />
-              <NoteButton note='G' onClick={() => handlePlayNote('G')} />
-              <NoteButton note='A' onClick={() => handlePlayNote('A')} />
-              <NoteButton note='B' onClick={() => handlePlayNote('B')} />
+              {scaleNotes.map(note => (
+                <NoteButton note={note.name} onClick={() => handlePlayNote(note.soundUrl)} key={note.name} title='Ecouter la note' />
+              ))}
             </div>
           )}
 

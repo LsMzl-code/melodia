@@ -77,6 +77,11 @@ export class AuthService {
     // Envoi d'un email de confirmation d'inscription
     await this.mailerService.sendInscriptionConfirmationEmail(email, username, emailConfirmationToken)
 
+    //
+    if(!newUser.isEmailConfirmed) {
+      return {message: "Merci de confirmer votre adresse email."}
+    }
+
     // Création du jeton JWT et authentification de l'utilisateur
     return this.authenticateUser(newUser.id, newUser.role);
   }

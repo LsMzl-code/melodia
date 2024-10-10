@@ -1,6 +1,5 @@
 import HeadingAdmin from '@/components/admin/heading-admin';
 import { Metadata } from 'next';
-import AddScaleForm from './components/forms/scale.form';
 import { getAllScales } from '@/src/server/data/scales.query';
 import { DataTable } from '@/components/ui/data-table';
 import { ScalesColumns } from './components/table/Columns';
@@ -18,12 +17,12 @@ const AdminScalePage = async () => {
 
   const formattedData: ScalesColumns[] = data.map(item => ({
     id: item.id,
-    nameScale: item.nameScale,
-    notesName: item.notes.map(note => note.name),
-    intervalId: item.intervalId,
-    tonalityId: item.tonalityId,
-    modeId: item.modeId,
-    scaleFamilyId: item.scaleFamilyId,
+    name: item.name,
+    notes: item.notes,
+    interval: item.interval,
+    tonality: item.tonality,
+    mode: item.mode,
+    family: item.family,
     degree: item.degree,
   }))
   return (

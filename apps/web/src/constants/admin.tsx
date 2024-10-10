@@ -1,4 +1,4 @@
-import { ArchiveIcon, ChevronsLeftRightEllipsisIcon, LayoutDashboardIcon, LibraryIcon, LinkIcon, Music3Icon, MusicIcon, PianoIcon, PowerIcon, SettingsIcon, ThermometerIcon, Users2Icon, UsersIcon } from "lucide-react";
+import { ArchiveIcon, ChevronsLeftRightEllipsisIcon, LayoutDashboardIcon, LibraryIcon, LinkIcon, Music3Icon, MusicIcon, PianoIcon, PowerIcon, SettingsIcon, TagsIcon, ThermometerIcon, Users2Icon, UsersIcon } from "lucide-react";
 
 export const AdminRoutes: { label: string, href: string, icon: React.ReactNode, title: string }[] = [
   {
@@ -36,6 +36,12 @@ export const AdminRoutes: { label: string, href: string, icon: React.ReactNode, 
     href: '/admin/intervalles',
     icon: <ChevronsLeftRightEllipsisIcon size={14}/>,
     title: 'Intervalles'
+  },
+  {
+    label: 'noms',
+    href: '/admin/noms',
+    icon: <TagsIcon size={14}/>,
+    title: 'Noms'
   },
   {
     label: 'notes',

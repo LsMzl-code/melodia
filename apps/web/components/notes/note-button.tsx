@@ -16,7 +16,7 @@ interface NoteButtonProps {
  */
 const NoteButton: React.FC<NoteButtonProps> = ({ note, onClick, title, className }) => {
   return (
-    <Button className={clsx('bg-[#313131] h-9 w-9 p-0 transition-colors', className, {
+    <Button className={clsx('bg-[#313131] h-8 w-8 p-0 transition-colors', className, {
       'hover:bg-red-500': note.includes('C'),
       'hover:bg-green-500': note.includes('D'),
       'hover:bg-blue-500': note.includes('E'),

@@ -28,7 +28,7 @@ export class ChordFamilyService {
   async createChordFamily(createChordFamilyDto: CreateChordFamilyDto): Promise<{ message: string }> {
     const { name } = createChordFamilyDto;
 
-    // Verification de la non-existence de la note
+    // Verification de la non-existence de la famille
     const existingChordFamily = await this.prismaService.chordFamily.findFirst({
       where: { name }
     })

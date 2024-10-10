@@ -7,9 +7,12 @@ import { z } from "zod";
  */
 export const AllChordsSchema = z.array(z.object({
   id: z.number(),
-  nameChord: z.string(),
-  tonalityId: z.number(),
-  modeId: z.number(),
+  name: z.string(),
+  notes: z.string(),
+  interval: z.string(),
+  tonality: z.string(),
+  mode: z.string(),
+  family: z.string(),
 }))
 
 /**
@@ -19,7 +22,10 @@ export const AllChordsSchema = z.array(z.object({
  */
 export const SingleChordSchema = z.object({
   id: z.number(),
-  nameChord: z.string(),
-  tonalityId: z.number(),
-  modeId: z.number(),
+  name: z.string(),
+  notes: z.string(),
+  interval: z.string(),
+  tonality: z.string(),
+  mode: z.string(),
+  family: z.string(),
 })

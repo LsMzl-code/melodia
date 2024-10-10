@@ -1,6 +1,7 @@
 import HeadingAdmin from '@/components/admin/heading-admin'
-import React from 'react'
 import { Metadata } from 'next';
+import AddScaleFamilyForm from '../components/forms/add-scale-family.form';
+import AddChordFamilyForm from '../components/forms/add-chord-family.form';
 
 export const metadata: Metadata = {
   title: "Admin - Familles/Edition",
@@ -14,7 +15,8 @@ const AdminEditFamilyPage = () => {
 
       <section className='mx-auto p-3 md:p-5 lg:p-7 space-y-5'>
         {/* Form */}
-        {/* <AddNoteForm /> */}
+        <AddScaleFamilyForm />
+        <AddChordFamilyForm/>
 
       </section>
     </>

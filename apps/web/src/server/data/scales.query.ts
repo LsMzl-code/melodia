@@ -1,8 +1,4 @@
-import { AllChordsSchema, SingleChordSchema } from "@/src/schemas/chords.schema"
-import { AllDegreesSchema, SingleDegreeSchema } from "@/src/schemas/degrees.schema"
 import { AllScalesSchema, SingleScaleSchema } from "@/src/schemas/scales.schema"
-import { Chord } from "@/src/types/chords.type"
-import { Degree } from "@/src/types/degrees.type"
 import { Scale } from "@/src/types/scales.type"
 import axios from "axios"
 

@@ -9,13 +9,16 @@ import { CellAction } from "./CellActions"
 export type ChordsColumns = {
   id: number;
   name: string;
-  tonalityId: number;
-  modeId: number;
+  tonality: string;
+  mode: string;
+  notes: string;
+  family: string;
+  interval: string;
 }
 
 export const ChordsColumns: ColumnDef<ChordsColumns>[] = [
   {
-    accessorKey: "nameChord",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
@@ -30,7 +33,7 @@ export const ChordsColumns: ColumnDef<ChordsColumns>[] = [
 
   },
   {
-    accessorKey: "tonalityId",
+    accessorKey: "tonality",
     header: ({ column }) => {
       return (
         <Button
@@ -44,14 +47,42 @@ export const ChordsColumns: ColumnDef<ChordsColumns>[] = [
     },
   },
   {
-    accessorKey: "modeId",
+    accessorKey: "mode",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          mode
+          Mode
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+  {
+    accessorKey: "interval",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Inverval
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+  {
+    accessorKey: "family",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Famille
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )

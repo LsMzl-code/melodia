@@ -1,23 +1,32 @@
-import { IsArray, IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateChordDto {
   @IsNotEmpty()
+  @IsString()
   readonly name: string;
 
   @IsNotEmpty()
-  readonly mode: number;
+  @IsString()
+  readonly mode: string;
 
   @IsNotEmpty()
-  readonly tonality: number;
+  @IsString()
+  readonly tonality: string;
 
   @IsNotEmpty()
-  readonly interval: number;
+  @IsString()
+  readonly interval: string;
 
   @IsNotEmpty()
-  readonly chordFamily: number;
+  @IsString()
+  readonly family: string;
 
   @IsNotEmpty()
-  @IsArray()
-  readonly notes: string[];
+  @IsString()
+  readonly notes: string;
+
+  @IsOptional()
+  @IsString()
+  readonly diagram: string;
 
 }

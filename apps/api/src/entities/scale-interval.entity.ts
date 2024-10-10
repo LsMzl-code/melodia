@@ -4,5 +4,4 @@ export class ScaleInterval {
   id: number;
   name: string;
   details: string;
-  scales: Scale[];
 }

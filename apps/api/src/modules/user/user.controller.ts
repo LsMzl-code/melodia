@@ -13,7 +13,7 @@ export class UserController {
   //*** GET ALL USERS ***//
   @Get()
   getAllUsers() {
-      return this.userService.getUsers();
+    return this.userService.getUsers();
   }
 
   //*** GET USER BY ID ***//
@@ -25,11 +25,16 @@ export class UserController {
   //*** UPDATE USER ***//
   @Put('/update/:id')
   @UseGuards(JwtAuthGuard)
-  updateUser(@Param('id', ParseIntPipe) id: string, @Body() updateUserDto: UpdateUserDto) {
+  updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.updateUser(id, updateUserDto);
   }
 
-
+  //*** UPDATE AVATAR ***//
+  @Put('/update-avatar/:id')
+  @UseGuards(JwtAuthGuard)
+  updateAvatar(@Body() updateUserDto: UpdateUserDto) {
+    return this.userService.updateUserAvatar(updateUserDto);
+  }
 
   //*** DELETE USER***//
   // @Delete('/delete/:id')

@@ -25,66 +25,20 @@ export class ScaleService {
 
   //*** CREATE SCALE ***//
   async createScale(createScaleDto: CreateScaleDto): Promise<{ message: string }> {
-    const { name, notes, mode, tonality, interval, scaleFamily } = createScaleDto;
+    const { name, tonality } = createScaleDto;
 
     // Vérification de la non-existence de la note
     const existingScale = await this.prismaService.scale.findFirst({
-      where: {
-        name: { name },
-        tonalityId: tonality
-      }
+      where: { name, tonality }
     })
     if (existingScale) throw new ConflictException('Cette gamme existe déjà');
 
     // Création de la gamme
-    const scale = this.prismaService.scale.create({
+    await this.prismaService.scale.create({
       data: {
-        name: {
-          connect: {
-            id: Number(name)
-          }
-        },
-        tonality: {
-          connect: {
-            id: tonality,
-          },
-        },
-        mode: {
-          connect: {
-            id: mode,
-          },
-        },
-        interval: {
-          connect: {
-            id: interval
-          }
-        },
-        scaleFamily: {
-          connect: {
-            id: scaleFamily,
-          }
-        }
+        ...createScaleDto
       }
     })
-
-    //TODO: Faire avec CreateMany
-    // Ajout des notes dans l'accord' crée
-    notes.map(
-      async (note, index) => await this.prismaService.notesOnScales.create({
-        data: {
-          note: {
-            connect: {
-              reference: note
-            }
-          },
-          scale: {
-            connect: {
-              id: (await scale).id,
-            },
-          },
-          orderNumber: index,
-        }
-      }))
 
     return { message: 'Gamme créée avec succès' };
 

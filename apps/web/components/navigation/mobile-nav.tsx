@@ -39,8 +39,8 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
   }
 
   return (
-    <Sheet>
-      <SheetTrigger asChild title="Menu de navigation" className="cursor-pointer">
+    <Sheet >
+      <SheetTrigger asChild title="Menu de navigation" className="cursor-pointer lg:hidden">
         <div>
           <UserAvatar currentAvatar={user?.currentAvatar ?? ''} />
         </div>
@@ -71,10 +71,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ user }) => {
           {user ? (
             <Link href={`/profil/${user.username}`} title="Voir mon profil" className="flex items-center justify-between mt-7 group">
               <p className="font-medium px-2 group-hover:underline underline-offset-2">{user?.username}</p>
-              <Avatar className="h-5 w-5 group-hover:scale-110 duration-200">
-                <AvatarImage src={user?.currentAvatar ?? ''} />
-                {/* <AvatarFallback>CN</AvatarFallback> */}
-              </Avatar>
+              <UserAvatar currentAvatar={user?.currentAvatar ?? ''}  className="h-5 w-5"/>
 
             </Link>
           ) : (

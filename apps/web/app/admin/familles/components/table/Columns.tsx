@@ -9,7 +9,6 @@ import { CellAction } from "./CellActions"
 export type ChordFamiliesColumns = {
   id: number;
   name: string;
-  chordsCount: number;
 }
 
 export const ChordFamiliesColumns: ColumnDef<ChordFamiliesColumns>[] = [
@@ -29,14 +28,28 @@ export const ChordFamiliesColumns: ColumnDef<ChordFamiliesColumns>[] = [
 
   },
   {
-    accessorKey: "chordsCount",
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => (
+      <CellAction data={row.original} />
+    ),
+  }
+]
+export type ScaleFamiliesColumns = {
+  id: number;
+  name: string;
+}
+
+export const ScaleFamiliesColumns: ColumnDef<ScaleFamiliesColumns>[] = [
+  {
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Accords
+          Nom
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )

@@ -11,46 +11,46 @@ export const NoteTypes: { value: string; label: string }[] = [
 /**
  * Nom des notes pour la sélection des notes lors de la création de gammes, accords...
  */
-export const NoteNames: { name: string; label: string }[] = [
-  { name: "C♭♭", label: "Do♭♭" },
-  { name: "D♭♭", label: "Re♭♭" },
-  { name: "E♭♭", label: "Mi♭♭" },
-  { name: "F♭♭", label: "Fa♭♭" },
-  { name: "G♭♭", label: "Sol♭♭" },
-  { name: "A♭♭", label: "La♭♭" },
-  { name: "B♭♭", label: "Si♭♭" },
+export const NoteNames: { name: string; label: string; soundUrl: string; }[] = [
+  { name: "C♭♭", label: "Do♭♭", soundUrl:"" },
+  { name: "D♭♭", label: "Re♭♭", soundUrl:"" },
+  { name: "E♭♭", label: "Mi♭♭", soundUrl:"" },
+  { name: "F♭♭", label: "Fa♭♭", soundUrl:"" },
+  { name: "G♭♭", label: "Sol♭♭", soundUrl:"" },
+  { name: "A♭♭", label: "La♭♭", soundUrl:"" },
+  { name: "B♭♭", label: "Si♭♭", soundUrl:"" },
 
-  { name: "C♭", label: "Do♭" },
-  { name: "D♭", label: "Re♭" },
-  { name: "E♭", label: "Mi♭" },
-  { name: "F♭", label: "Fa♭" },
-  { name: "G♭", label: "Sol♭" },
-  { name: "A♭", label: "La♭" },
-  { name: "B♭", label: "Si♭" },
+  { name: "C♭", label: "Do♭", soundUrl:"/sounds/high/Cb.mp3" },
+  { name: "D♭", label: "Re♭", soundUrl:"/sounds/high/Db.mp3" },
+  { name: "E♭", label: "Mi♭", soundUrl:"/sounds/high/Eb.mp3" },
+  { name: "F♭", label: "Fa♭", soundUrl:"/sounds/high/Fb.mp3" },
+  { name: "G♭", label: "Sol♭", soundUrl:"/sounds/high/Gb.mp3" },
+  { name: "A♭", label: "La♭", soundUrl:"/sounds/high/Ab.mp3" },
+  { name: "B♭", label: "Si♭", soundUrl:"/sounds/high/Bb.mp3" },
 
-  { name: "C", label: "Do" },
-  { name: "D", label: "Re" },
-  { name: "E", label: "Mi" },
-  { name: "F", label: "Fa" },
-  { name: "G", label: "Sol" },
-  { name: "A", label: "La" },
-  { name: "B", label: "Si" },
+  { name: "C", label: "Do", soundUrl:"/sounds/high/C.mp3" },
+  { name: "D", label: "Re", soundUrl:"/sounds/high/D.mp3" },
+  { name: "E", label: "Mi", soundUrl:"/sounds/high/E.mp3" },
+  { name: "F", label: "Fa", soundUrl:"/sounds/high/F.mp3" },
+  { name: "G", label: "Sol", soundUrl:"/sounds/high/G.mp3" },
+  { name: "A", label: "La", soundUrl:"/sounds/high/A.mp3" },
+  { name: "B", label: "Si", soundUrl:"/sounds/high/B.mp3" },
 
-  { name: "C♯", label: "Do♯" },
-  { name: "D♯", label: "Re♯" },
-  { name: "E♯", label: "Mi♯" },
-  { name: "F♯", label: "Fa♯" },
-  { name: "G♯", label: "Sol♯" },
-  { name: "A♯", label: "La♯" },
-  { name: "B♯", label: "Si♯" },
+  { name: "C♯", label: "Do♯", soundUrl:"/sounds/high/Cd.mp3" },
+  { name: "D♯", label: "Re♯", soundUrl:"/sounds/high/Dd.mp3" },
+  { name: "E♯", label: "Mi♯", soundUrl:"/sounds/high/Ed.mp3" },
+  { name: "F♯", label: "Fa♯", soundUrl:"/sounds/high/Fd.mp3" },
+  { name: "G♯", label: "Sol♯", soundUrl:"/sounds/high/Gd.mp3" },
+  { name: "A♯", label: "La♯", soundUrl:"/sounds/high/Ad.mp3" },
+  { name: "B♯", label: "Si♯", soundUrl:"/sounds/high/Bd.mp3" },
 
-  { name: "C♯♯", label: "Do♯♯" },
-  { name: "D♯♯", label: "Re♯♯" },
-  { name: "E♯♯", label: "Mi♯♯" },
-  { name: "F♯♯", label: "Fa♯♯" },
-  { name: "G♯♯", label: "Sol♯♯" },
-  { name: "A♯♯", label: "La♯♯" },
-  { name: "B♯♯", label: "Si♯♯" },
+  { name: "C♯♯", label: "Do♯♯", soundUrl:"" },
+  { name: "D♯♯", label: "Re♯♯", soundUrl:"" },
+  { name: "E♯♯", label: "Mi♯♯", soundUrl:"" },
+  { name: "F♯♯", label: "Fa♯♯", soundUrl:"" },
+  { name: "G♯♯", label: "Sol♯♯", soundUrl:"" },
+  { name: "A♯♯", label: "La♯♯", soundUrl:"" },
+  { name: "B♯♯", label: "Si♯♯", soundUrl:"" },
 ];
 
 /**
@@ -116,6 +116,14 @@ export const LowNoteSoundsUrl: { name: string; url: string }[] = [
   { name: "si♯", url: "/sounds/low/Bd.mp3" },
 ]
 
+/**
+ * Les différents noms de tonalités.
+ * -
+ */
+export const ModeNames: { id: string; name: string }[] = [
+  { id: "mineur", name: "Mineur" },
+  { id: "majeur", name: "Majeur" },
+]
 /**
  * Les différents noms de tonalités.
  * -
