@@ -53,6 +53,7 @@ export const NoteNames: { name: string; label: string; soundUrl: string; }[] = [
   { name: "B♯♯", label: "Si♯♯", soundUrl:"" },
 ];
 
+
 /**
  * Fichiers audio des notes aigües, placés dans le dossier public/sounds
  * -

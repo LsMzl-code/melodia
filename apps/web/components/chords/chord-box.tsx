@@ -22,7 +22,7 @@ const ChordBox: React.FC<ChordBoxProps> = ({ name, family, tonality }) => {
   //***** LECTURE AUDIO DES NOTES *****//
   // Lecture des gammes ( toutes les notes)
   const handlePlayTonalityNotes = (sounds: Array<string> | undefined) => {
-    playNotes(sounds);
+    playNotes(sounds, 10);
   };
 
   // Lecture audio d'une note

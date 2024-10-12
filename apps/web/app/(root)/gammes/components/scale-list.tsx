@@ -33,7 +33,7 @@ const ScaleList: React.FC<ScaleListProps> = ({ allScales }) => {
   return (
     <section className='mt-5 md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
       {filteredData.map(scale => (
-        <ScaleBox name={scale.name} family={scale.family} tonality={scale.tonality} key={scale.id} notes={scale.notes} />
+        <ScaleBox name={scale.name} family={scale.family} tonality={scale.tonality} key={scale.id} notes={scale.notes} id={scale.id} />
       ))}
     </section>
   )

@@ -18,11 +18,11 @@ const MainNav = () => {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Gammes</NavigationMenuTrigger>
           <NavigationMenuContent className="border border-foreground/10">
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+            <div className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {scales.map((item) => (
-                <MainNavItem title={item.title} description={item.description} href={item.href} />
+                <MainNavItem title={item.title} description={item.description} href={item.href} key={item.title}/>
               ))}
-            </ul>
+            </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
@@ -30,11 +30,11 @@ const MainNav = () => {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Accords</NavigationMenuTrigger>
           <NavigationMenuContent className="border border-foreground/10">
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+            <div className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {chords.map((item) => (
-                <MainNavItem title={item.title} description={item.description} href={item.href} />
+                <MainNavItem title={item.title} description={item.description} href={item.href} key={item.title}/>
               ))}
-            </ul>
+            </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
@@ -42,11 +42,11 @@ const MainNav = () => {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Tonalités</NavigationMenuTrigger>
           <NavigationMenuContent className="border border-foreground/10">
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+            <div className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {tonalities.map((item) => (
-                <MainNavItem title={item.title} description={item.description} href={item.href} />
+                <MainNavItem title={item.title} description={item.description} href={item.href} key={item.title}/>
               ))}
-            </ul>
+            </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>

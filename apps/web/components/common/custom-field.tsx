@@ -1,7 +1,6 @@
 "use client";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -13,6 +12,9 @@ import Image from "next/image";
 
 import { FormFieldsType } from "@/src/types";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
+import { PasswordInput } from "../forms/password-input";
+import { cn } from "@/lib/utils";
+
 
 
 
@@ -21,11 +23,14 @@ interface CustomProps {
   fieldType: FormFieldsType;
   type?: string;
   required?: boolean;
+  className?: string;
   name: string;
   label?: string;
+  value?: string;
   placeholder?: string;
   iconSrc?: string;
   iconAlt?: string;
+  icon?: React.ReactNode;
   disabled?: boolean;
   selectGroupName?: string | string[];
   dateFormat?: string;
@@ -46,30 +51,48 @@ interface CustomProps {
  * @returns
  */
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
+
   switch (props.fieldType) {
     case FormFieldsType.INPUT:
       return (
-        <div className="flex rounded-md">
+        <div className="flex rounded-md relative">
           {props.iconSrc && (
             <Image
               src={props.iconSrc}
               alt={props.iconAlt || "icone"}
               width={24}
               height={40}
-              className="ml-2"
+              className="ml-2 absolute top-[50%] translate-y-[-50%] right-2"
             />
           )}
+
+          {props.icon && (
+            <span className="absolute top-[50%] translate-y-[-50%] right-2">{props.icon}</span>
+          )}
           <FormControl>
-            <Input
-              placeholder={props.placeholder}
-              {...field}
-              className="bg-[#2A2B34] border border-foreground/10 "
-              type={props.type}
-              required={props.required}
-            />
+            {props.type == "password" ? (
+                <PasswordInput
+                  placeholder={props.placeholder}
+                  {...field}
+                  className="bg-[#2A2B34] border border-foreground/10 "
+                  type={props.type}
+                  required={props.required}
+                />
+            ) : (
+              <Input
+                placeholder={props.placeholder}
+                {...field}
+                className="bg-[#2A2B34] border border-foreground/10 "
+                type={props.type}
+                required={props.required}
+              />
+            )
+            }
           </FormControl>
         </div>
       );
+
+
     case FormFieldsType.SELECT:
       return (
         <Select
@@ -118,9 +141,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     //       </FormControl>
     //    );
     case FormFieldsType.SKELETON:
-       return props.renderSkeleton ? props.renderSkeleton(field) : null;
+      return props.renderSkeleton ? props.renderSkeleton(field) : null;
 
-       
+
     // case FormFieldsType.SELECT:
     //    return (
     //       <FormControl>
@@ -184,11 +207,11 @@ const CustomFormField = (props: CustomProps) => {
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex-1">
+        <FormItem className={cn(props.className, "flex-1")}>
           {fieldType !== FormFieldsType.CHECKBOX && label && (
             <FormLabel className="text-xs text-foreground/80">{label}</FormLabel>
           )}
-          <RenderField field={field} props={props} />
+          <RenderField field={field} props={props}/>
 
           <FormMessage className="shad-error" />
         </FormItem>

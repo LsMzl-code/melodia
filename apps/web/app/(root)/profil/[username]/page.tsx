@@ -1,5 +1,4 @@
 import IconButton from "@/components/common/icon-button"
-import TopNavMobile from "@/components/navigation/top-nav-mobile"
 import { Button } from "@/components/ui/button"
 import EditProfileDialog from "@/app/(root)/profil/[username]/components/forms/edit-profile/edit-profile-dialog"
 import { getCurrentUser } from "@/src/server/data/users.query"
@@ -20,8 +19,6 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
 
   return (
     <main className="mt-5 container">
-
-      <TopNavMobile />
 
       <div className="w-full items-center flex justify-between my-10">
         {/* Heading */}

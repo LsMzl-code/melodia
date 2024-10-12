@@ -78,8 +78,8 @@ export class AuthService {
     await this.mailerService.sendInscriptionConfirmationEmail(email, username, emailConfirmationToken)
 
     //
-    if(!newUser.isEmailConfirmed) {
-      return {message: "Merci de confirmer votre adresse email."}
+    if (!newUser.isEmailConfirmed) {
+      return { message: "Merci de confirmer votre adresse email." }
     }
 
     // Création du jeton JWT et authentification de l'utilisateur
@@ -126,6 +126,9 @@ export class AuthService {
     await this.prismaService.emailVerificationToken.delete({
       where: { token, email: existingUser.email },
     });
+
+    // Envoi d'un message sur ma boite mail
+    await this.mailerService.sendNewSubscriberEmail()
 
     return { message: 'L\'adresse email a été confirmée' }
   }

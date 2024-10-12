@@ -12,7 +12,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react'
 import { NewPasswordSchema } from "./new-password.schema"
 import { FormFieldsType } from "@/src/types"
-import { EyeIcon } from "lucide-react"
 
 const NewPasswordForm = () => {
   //*** STATES ***//

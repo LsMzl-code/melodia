@@ -1,0 +1,7 @@
+progressions sauvegardées
+id      number
+nom     string
+userId  number
+chords  string => tableau des ID des accords
+createdAt DateTime
+updatedAt DateTime

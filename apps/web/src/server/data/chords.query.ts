@@ -3,8 +3,8 @@ import { Chord } from "@/src/types/chords.type"
 import axios from "axios"
 
 /**
- * Récupération de toutes les notes
- * @api GET http://localhost:8000/notes
+ * Récupération de toutes les accords
+ * @api GET http://localhost:8000/chords
  * @visibility public
  * @returns 
  */

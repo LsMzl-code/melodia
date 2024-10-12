@@ -61,5 +61,26 @@ export class MailerService {
       return console.error({ error });
     }
   }
+
+  //*** EMAIL LORS DE L'INSCRIPTION D'UN NOUVEL UTILISATEUR ***//
+  /**
+   * Envoi d'un email à moi lors de l'inscription d'un nouvel utilisateur.
+   * -
+   * @returns 
+   */
+  async sendNewSubscriberEmail() {
+    const { error } = await this.mailer.emails.send({
+      from: 'Mélodia <onboarding@resend.dev>',
+      to: 'louismzl.dev@gmail.com',
+      subject: 'Inscription sur Mélodia',
+      html: `<h1>Nouvel inscrit,</h1>
+      <p>Une personne vient de s'inscrire sur Mélodia.</p>
+      `,
+    });
+
+    if (error) {
+      return console.error({ error });
+    }
+  }
 }
 

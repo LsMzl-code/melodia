@@ -86,30 +86,6 @@ export async function verifySession() {
 }
 
 /**
- * Mise à jour d'une session utilisateur.
- * -
- * @returns - La session mise à jour
- */
-// export async function updateSession(request: NextRequest) {
-//   const session = request.cookies.get('session')?.value
-//   const payload = await decrypt(session)
-
-//   if (!session || !payload) return
-
-
-//   // Mise à jour de la session pour ne pas qu'elle expire
-//   const parsed = await decrypt(session);
-//   parsed!.expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-//   const res = NextResponse.next();
-//   res.cookies.set('session', await encrypt(parsed), {
-//     name: 'session',
-//     httpOnly: true,
-//     expires: parsed?.exp,
-//   })
-//   return res
-// }
-
-/**
  * Suppression d'une session utilisateur.
  * -
  */

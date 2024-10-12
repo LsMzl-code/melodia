@@ -1,0 +1,24 @@
+React DnD 
+
+import { useDrag, useDrop } from 'react-dnd';
+
+const Accord = ({ name }) => {
+  const [, drag] = useDrag(() => ({
+    type: 'ACCORD',
+    item: { name },
+  }));
+  
+  return <div ref={drag}>{name}</div>;
+};
+
+const EditorZone = () => {
+  const [, drop] = useDrop(() => ({
+    accept: 'ACCORD',
+    drop: (item) => console.log(`Accord déposé : ${item.name}`),
+  }));
+
+  return <div ref={drop} className="drop-zone">Déposez vos accords ici</div>;
+};
+
+
+

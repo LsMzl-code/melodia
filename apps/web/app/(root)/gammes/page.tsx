@@ -1,7 +1,5 @@
 import Heading from '@/components/common/heading'
 import IconButton from '@/components/common/icon-button'
-import ScaleBox from '@/components/scales/scale-box'
-import TopNavMobile from '@/components/navigation/top-nav-mobile'
 import NoteFilter from '@/components/notes/note-filter'
 import ScaleFilter from '@/components/scales/scale-filter'
 import { Metadata } from 'next'
@@ -21,7 +19,6 @@ const ScalesPage = async () => {
   const allScales = await getAllScales()
   const allScaleFamilies = await getAllScaleFamilies()
   if (!allScales || !allScaleFamilies) return <div>Erreur lors de la récupération des gammes</div>
-
 
   //TODO: Voir pour mettre une pagination
   return (

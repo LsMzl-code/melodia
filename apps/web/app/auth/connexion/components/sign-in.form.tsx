@@ -8,7 +8,6 @@ import { FormFieldsType } from "@/src/types"
 //*** FORM ***//
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -17,6 +16,8 @@ import axios from "axios";
 import { toast } from "@/hooks/use-toast"
 import { SignInSchema } from "./sign-in.schema"
 import { createSession } from "@/lib/session"
+import { AtSignIcon } from "lucide-react"
+
 
 
 
@@ -24,9 +25,6 @@ import { createSession } from "@/lib/session"
 const SignInForm = () => {
   //*** STATES ***//
   const [isLoading, setIsLoading] = useState(false)
-
-  //*** HOOKS ***//
-  const router = useRouter()
 
   //*** FORM VALUES ***//
   const form = useForm<z.infer<typeof SignInSchema>>({
@@ -36,6 +34,9 @@ const SignInForm = () => {
       password: "",
     },
   })
+
+
+
 
   //*** FORM SUBMIT ***//
   const onSubmit = async (data: z.infer<typeof SignInSchema>) => {
@@ -65,12 +66,22 @@ const SignInForm = () => {
     }
   }
 
+
+
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        <CustomFormField control={form.control} fieldType={FormFieldsType.INPUT} name="email" type="email" placeholder="Adresse mail" />
-        <CustomFormField control={form.control} fieldType={FormFieldsType.INPUT} name="password" type="password" placeholder="Mot de passe" />
-        <Button type="submit" className="w-full bg-gray-50 text-background hover:bg-foreground/50 transition-colors mt-8" disabled={isLoading}>Connexion</Button>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
+        <div className="space-y-4">
+          {/* Email */}
+          <CustomFormField required control={form.control} fieldType={FormFieldsType.INPUT} name="email" type="email" placeholder="Adresse mail" icon={<AtSignIcon className="h-5 w-5" />} />
+
+          {/* Password */}
+          <CustomFormField required control={form.control} fieldType={FormFieldsType.INPUT} name="password" type="password" placeholder="Mot de passe" />
+        </div>
+
+        <Button type="submit" className="w-full bg-gray-50 text-background hover:bg-foreground/50 transition-colors mt-6" disabled={isLoading}>Connexion</Button>
+        <Link href={'/auth/mot-de-passe-oublie'} title="Réinitialiser le mot de passe" className="text-xs self-end mt-2 text-foreground/30 hover:text-blue-primary transition-colors duration-300">Mot de passe oublié</Link>
       </form>
 
       <span className="flex items-center justify-center gap-2 mt-5 text-sm">

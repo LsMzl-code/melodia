@@ -7,16 +7,18 @@ import { Button } from '../ui/button';
 import NoteButton from '../notes/note-button';
 import { cn } from '@/lib/utils';
 import { NoteNames } from '@/src/constants/notes';
+import { compareNotes } from '@/src/functions/scales';
 
 
 interface ScaleBoxProps {
+  id: number;
   name: string;
   family: string;
   tonality: string;
-  notes: string
+  notes: string;
 }
 
-const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, tonality, notes }) => {
+const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, tonality, notes, id }) => {
 
   //*** STATES ***//
   const [isOpen, setIsOpen] = useState(false);
@@ -32,11 +34,7 @@ const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, tonality, notes }) =>
   };
 
   //*** RECUPERATION DES NOTES ***//
-  const allNotes = NoteNames;
-  const notesArray = notes.split(',').map(note => note.trim());
-
-  const scaleNotes = allNotes.filter(note => notesArray.includes(note.name))
-
+  const formattedNotes = compareNotes(notes)
 
 
   return (
@@ -55,7 +53,7 @@ const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, tonality, notes }) =>
               {/* //TODO: Lecture des notes */}
               {/* Play button */}
               <Button
-                onClick={() => handlePlayTonalityNotes(scaleNotes.map(note => note.soundUrl))}
+                onClick={() => handlePlayTonalityNotes(formattedNotes.map(note => note.soundUrl))}
                 className='bg-[#191919] h-9 w-9 p-0 hover:bg-indigo-600'
                 title='Ecouter les notes de la gamme'
               >
@@ -75,7 +73,7 @@ const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, tonality, notes }) =>
               <IconButton className='group h-9 w-9' icon={isOpen ? (<ChevronUp className="h-5 w-5 group-hover:animate-bounce" />) : (<ChevronDown className="h-5 w-5 group-hover:animate-bounce" />)} onClick={() => setIsOpen(!isOpen)} title='Afficher les notes' />
 
               {/* Scale page */}
-              <IconButton icon={<Eye className="h-5 w-5" />} href={`/gammes/${tonality}`} title='Page de détails de la gamme' className='hover:bg-blue-primary h-9 w-9' />
+              <IconButton icon={<Eye className="h-5 w-5" />} href={`/gammes/${String(id)}`} title='Page de détails de la gamme' className='hover:bg-blue-primary h-9 w-9' />
             </div>
           </div>
           {/* Bottom */}
@@ -83,7 +81,7 @@ const ScaleBox: React.FC<ScaleBoxProps> = ({ name, family, tonality, notes }) =>
           {isOpen && (
             //! Map sur les notes de la gamme
             <div className="w-full flex items-center justify-start gap-1">
-              {scaleNotes.map(note => (
+              {formattedNotes.map(note => (
                 <NoteButton note={note.name} onClick={() => handlePlayNote(note.soundUrl)} key={note.name} title='Ecouter la note' />
               ))}
             </div>
